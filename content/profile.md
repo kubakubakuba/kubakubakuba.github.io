@@ -9,6 +9,7 @@ I'm interested in:
 - astronomy
 - travelling
 - photography
+- NixOS❄
 
 and much more.
 

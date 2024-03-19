@@ -67,6 +67,7 @@ title = "Jakub Pelc"
   # Note: ["ACTIVITY", "URL or PATH TO YOUR MARKDOWN FILE"]
   files = [ 
     ["CV", "./cv"],
-	["Contact", "./contact"],
-    ["Projects", "./projects"],
+    ["Contact", "./contact"],
+    ["QtRvSim Web Eval", "./web_eval"],
+    ["InstallFest 2024", "./if24"]
   ]
