@@ -1,0 +1,57 @@
+@media print {
+	body {
+	  font-size: 10pt;
+	  background-color: white!important;
+	}
+	h1{
+		font-size: 14pt;
+	}
+
+	h2{
+		font-size: 12pt;
+	}
+
+	h3{
+		font-size: 10pt;
+	}
+
+	h4{
+		font-size: 8pt;
+	}
+
+	h5{
+		font-size: 6pt;
+	}
+
+	h6{
+		font-size: 4pt;
+	}
+
+	p{
+		font-size: 8pt;
+	
+	}
+
+	a{
+		font-size: 8pt;
+		color: black;
+	}
+
+	img{
+		display: none;
+	}
+
+	li{
+		font-size: 8pt;
+	
+	}
+
+
+	.navbar, .footer, .sidebar, .digital-only {
+	  display: none;
+	}
+
+	h1, h2, h3, h4, h5, h6, p {
+	  color: black;
+	}
+}
