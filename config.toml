@@ -2,6 +2,7 @@ baseURL = "https://kubakubakuba.github.io/"
 languageCode = "en-us"
 title = "Jakub Pelc"
 theme = "hugo-theme-shell"
+googleAnalytics = "G-4SVEVVKG8L"
 
 [Params]
   # Note: This is for the meta description, which is different from the "description" displayed in the terminal.
