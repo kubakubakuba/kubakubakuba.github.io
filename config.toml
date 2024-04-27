@@ -71,5 +71,6 @@ googleAnalytics = "G-4SVEVVKG8L"
     ["CV", "./cv"],
     ["Contact", "./contact"],
     ["QtRvSim Web Eval", "./web_eval"],
-    ["InstallFest 2024", "./if24"]
+    ["InstallFest 2024", "./if24"],
+    ["Edulab", "./edulab"]
   ]

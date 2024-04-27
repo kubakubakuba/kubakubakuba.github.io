@@ -24,7 +24,7 @@ Experience
 
 - I lecture at elementary and high schools about electromobility, AI, IoT, 5G, and other technologies.
 
-**Lecturer at [Škoda Auto](https://skodaauto-edulab.cz/)** (2022-present)
+**Lecturer at [Škoda Auto](../edulab)** (2022-present)
 - I also lecture at Škoda Auto's Edulab about usage of modern technologies in automotive industry.
 
 Skills
@@ -54,19 +54,19 @@ Volunteering
 
 Presentations, and Conferences
 ------
-**[InstallFest 2024](https://swpelc.eu/if24)** - conference for Linux and open-source enthusiasts, FEE CTU, Prague
-- I presented the [QtRvSim Web Evaluation](https://swpelc.eu/web_eval) project.
-- [Slides](https://swpelc.eu/if24slides.pdf) (English) . [Video](https://www.youtube.com/watch?v=1XQR8E8omCE&list=PLub6xBWO8gV8AG4kBn5W-QkMnTcdAPqvn&index=7) (Czech) . [root.cz article](https://www.root.cz/clanky/kurz-preziti-s-linuxem-otevreny-hardware-meni-spolecnost-a-tucnak-v-telefonu-zapisky-z-installfestu/galerie-24334-106/#h22) (Czech)
+**[InstallFest 2024](../if24)** - conference for Linux and open-source enthusiasts, FEE CTU, Prague
+- I presented the [QtRvSim Web Evaluation](../web_eval) project.
+- [Slides](../if24slides.pdf) (English) . [Video](https://www.youtube.com/watch?v=1XQR8E8omCE&list=PLub6xBWO8gV8AG4kBn5W-QkMnTcdAPqvn&index=7) (Czech) . [root.cz article](https://www.root.cz/clanky/kurz-preziti-s-linuxem-otevreny-hardware-meni-spolecnost-a-tucnak-v-telefonu-zapisky-z-installfestu/galerie-24334-106/#h22) (Czech)
 
 Projects and Publications
 --------
-**[*QtRvSim Web Evaluation*](https://swpelc.eu/web_eval)** (2023 - present)
+**[*QtRvSim Web Evaluation*](../web_eval)** (2023 - present)
 
 - I wrote an online evaluation system for student RISC-V submissions in course [b35apo](https://cw.fel.cvut.cz/b222/courses/b35apo/en/start).
 - The system is written in Python using Flask framework and is using [QtRvSim](https://github.com/cvut/qtrvsim) as the evaluation application.
 - Running version can be found on [https://eval.comparch.edu.cvut.cz](https://eval.comparch.edu.cvut.cz), repository is available on [GitLab](https://gitlab.fel.cvut.cz/b35apo/qtrvsim-eval-web).
-- The project has been presented at [InstallFest 2024](https://swpelc.eu./if24).
+- The project has been presented at [InstallFest 2024](../if24).
 
-**[*Energoplay*](https://swpelc.eu/energoplay)** (2021 - 2022)
+**[*Energoplay*](../energoplay)** (2021 - 2022)
 - In the year 2021 as a part of team of 3, we created a project called Energoplay, an interactive game focused en energetics and sustainability.
 - This project won the 1st place in the national finals of [Energetická olympiáda](https://www.energeticka-gramotnost.cz/olympi%C3%A1da).
