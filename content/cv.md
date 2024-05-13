@@ -38,7 +38,7 @@ I am now learning NixOS and I use it as my main OS for development. I am also fa
 Languages
 ------
 - **Czech** (native)
-- **English** (fluent, CAE C1)
+- **English** (fluent, CAE C1, verification number B6914173)
 - **German** (intermediate)
 
 Competitions
