@@ -70,6 +70,7 @@ googleAnalytics = "G-4SVEVVKG8L"
   files = [ 
     ["CV", "./cv"],
     ["Contact", "./contact"],
+    ["Wiki", "https://wiki.swpelc.eu"],
     ["QtRvSim Web Eval", "./web_eval"],
     ["InstallFest 2024", "./if24"],
     ["Edulab", "./edulab"]
