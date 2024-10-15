@@ -15,7 +15,7 @@ This includes 3D printing, Virtual / Augmented Reality, Robotics, Generative Art
 
 Český rozhlas Střední Čechy interview: [link (11:29) [Czech]](https://program.rozhlas.cz/zaznamy#/strednicechy/46/2024-10-15), [local backup](../edulab_benesov_cro.mp3)
 
-Benešovksý Deník article: [link [Czech]](https://benesovsky.denik.cz/zpravy_region/mobilni-laborator-zaparkovala-v-centru-benesova-k-dispozici-je-zakum-i-dospelym.html), [local backup](../benesovsky_denik_edulab.pdf)
+Benešovský deník article: [link [Czech]](https://benesovsky.denik.cz/zpravy_region/mobilni-laborator-zaparkovala-v-centru-benesova-k-dispozici-je-zakum-i-dospelym.html), [local backup](../benesovsky_denik_edulab.pdf)
 
 #### Dobruška 13.5.2024
 
