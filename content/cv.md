@@ -39,7 +39,7 @@ Languages
 ------
 - **Czech** (native)
 - **English** (fluent, CAE C1, verification number B6914173)
-- **German** (intermediate)
+- **German** (passive)
 
 Competitions
 ------
