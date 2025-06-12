@@ -29,11 +29,11 @@ Experience
 
 Skills
 ------
-**Programming (frequent use):** C/C++, Python, git, HTML/CSS, SQL, Bash, Markdown
+**Programming (frequent use):** Python, C/C++, git, HTML/CSS, SQL, Bash, Markdown, LaTeX
 
-**Programming (other used):** Nix, LaTeX, x86 / RISC-V, Java, JavaScript, PHP, Racket
+**Programming (other used):** JavaScript, x86 / RISC-V, Java, PHP, Racket
 
-I am now learning NixOS and I use it as my main OS for development. I am also familiar with Arch Linux, Ubuntu / Debian and Windows.
+I mainly develop at Debian based Linux distributions, but I am also familiar with Arch Linux, and for some reason Windows.
 
 Languages
 ------
@@ -58,7 +58,25 @@ Presentations, and Conferences
 - I presented the [QtRvSim Web Evaluation](../web_eval) project.
 - [Slides](../if24slides.pdf) (English) . [Video](https://www.youtube.com/watch?v=1XQR8E8omCE&list=PLub6xBWO8gV8AG4kBn5W-QkMnTcdAPqvn&index=7) (Czech) . [root.cz article](https://www.root.cz/clanky/kurz-preziti-s-linuxem-otevreny-hardware-meni-spolecnost-a-tucnak-v-telefonu-zapisky-z-installfestu/galerie-24334-106/#h22) (Czech)
 
-Projects and Publications
+
+Publications
+--------
+**[*Relative Pose Estimation Using Event-Based Measurements of LED Signals*](http://hdl.handle.net/10467/122546)** (2025)
+- My Bachelor's thesis, regarding a relative pose estimation of a UAV, equipped with UV LED markers, using an event-based camera
+- **[*Full text*](../bachelor/F3-BP-2025-Pelc-Jakub-Relative_Pose_Estimation_Using_Event_Based_Measurements_of_LED_Signals.pdf)** (PDF, 14 MB) . **[*LaTeX source*](https://github.com/kubakubakuba/Bachelor-Thesis)**
+- **[*Presentation*](../bachelor/defense_slides)** (PDF, 11 MB) . **[*LaTeX source*](https://github.com/kubakubakuba/Bachelor-Thesis/tree/main/slides)** $\LaTeX$
+- $$a^*=x-b^*$$
+- [Supervisor report](../bachelor/F3-BP-2025-posudek-Vrba_Vojtech.pdf) (PDF, 209 KB)
+- [Opponent report](../bachelor/F3-BP-2025-posudek-Kubicek_Ondrej.pdf) (PDF, 35 KB)
+
+Attachments:
+- **[*Metavision-Pyocamcalib*](https://github.com/kubakubakuba/metavision-pyocamcalib)** - a Python package for calibration of event-based cameras, using Scaramuzza's OCamCalib method
+- **[*ROS DistanceEstimator*](https://github.com/kubakubakuba/ros-event-distance)** - a ROS implementation of a position / distance estimator.
+- **[*Analysis repository*](https://github.com/kubakubakuba/mrs-uvdar-distance-estimator)** - a repository containing various analyses done during the thesis
+
+[http://hdl.handle.net/10467/122546](http://hdl.handle.net/10467/122546)
+
+Projects
 --------
 **[*QtRvSim Web Evaluation*](../web_eval)** (2023 - present)
 
