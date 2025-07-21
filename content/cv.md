@@ -32,8 +32,8 @@ Skills
 **Programming (frequent use):** Python, C/C++, git, HTML/CSS, SQL, Bash, Markdown, LaTeX
 
 **Programming (other used):** JavaScript, x86 / RISC-V, Java, PHP, Racket
-
-I mainly develop at Debian based Linux distributions, but I am also familiar with Arch Linux, and for some reason Windows.
+	
+I mainly develop using Arch / Debian based Linux distributions.
 
 Languages
 ------
@@ -68,6 +68,8 @@ Link: [http://hdl.handle.net/10467/122546](http://hdl.handle.net/10467/122546)
 
 Projects
 --------
+**[*Energetická akademie*](../enak)** (2025 - present)
+
 **[*QtRvSim Web Evaluation*](../web_eval)** (2023 - present)
 
 - I wrote an online evaluation system for student RISC-V submissions in course [b35apo](https://cw.fel.cvut.cz/b222/courses/b35apo/en/start).
