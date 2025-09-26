@@ -1,11 +1,11 @@
 ## Hello, I'm Jakub Pelc
 
-I am a bachelor's degree student of [Open Informatics](https://oi.fel.cvut.cz/cs/) at [FEE CTU in Prague](https://fel.cvut.cz/cs).
+I am a master's degree student of [Open Informatics](https://oi.fel.cvut.cz/cs/) at [FEE CTU in Prague](https://fel.cvut.cz/cs/).
 
 My main interests are:
+- astronomy
 - machine learning
 - drones
-- astronomy
 - travelling
 - photography & videography
 
