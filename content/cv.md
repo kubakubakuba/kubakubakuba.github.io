@@ -5,7 +5,7 @@ Jakub Pelc
 
 
 
-#### Bachelor's degree student of [Open Informatics](https://oi.fel.cvut.cz/cs/) at [FEE CTU in Prague](https://fel.cvut.cz/cs). 
+#### Master's degree student of [Open Informatics](https://oi.fel.cvut.cz/cs/) at [FEE CTU in Prague](https://fel.cvut.cz/cs). 
 ###### [ [swpelc.eu](https://swpelc.eu) ] . [ [contact@swpelc.eu](mailto:contact@swpelc.eu) ] . [ [LinkedIn](https://www.linkedin.com/in/jakub-pelc-a74828235/) ] . [ [GitHub](https://github.com/kubakubakuba) ] . [ [Instagram](https://www.instagram.com/pelc.jakub/) ]
 
 I'm interested in machine learning, drones, web development, astronomy, travelling, photography, and self improvement.
