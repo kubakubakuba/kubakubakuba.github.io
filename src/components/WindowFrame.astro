@@ -1,0 +1,17 @@
+---
+interface Props {
+  title: string;
+  label?: string;
+  class?: string;
+}
+
+const { title, label, class: className = "" } = Astro.props;
+import WindowBar from "./WindowBar.astro";
+---
+
+<section class:list={["window", className]} aria-label={title}>
+  <WindowBar title={title} label={label} />
+  <div class="window__body">
+    <slot />
+  </div>
+</section>

@@ -1,0 +1,13 @@
+---
+interface Props {
+  title: string;
+  label?: string;
+}
+
+const { title, label } = Astro.props;
+---
+
+<div class="window__bar">
+  <span class="window__title">{title}</span>
+  {label && <span class="window__label">{label}</span>}
+</div>

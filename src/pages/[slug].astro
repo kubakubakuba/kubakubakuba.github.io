@@ -1,0 +1,75 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ProjectVisual from "../components/ProjectVisual.astro";
+import MathStyles from "../components/MathStyles.astro";
+import WindowBar from "../components/WindowBar.astro";
+
+export async function getStaticPaths() {
+  const [work, pages] = await Promise.all([getCollection("work"), getCollection("pages")]);
+  return [
+    ...work.map((entry) => ({ params: { slug: entry.data.slug } })),
+    ...pages.map((entry) => ({ params: { slug: entry.data.slug } })),
+  ];
+}
+
+const slug = Astro.params.slug;
+const workEntries = await getCollection("work");
+const pageEntries = await getCollection("pages");
+const workEntry = workEntries.find((entry) => entry.data.slug === slug);
+const pageEntry = pageEntries.find((entry) => entry.data.slug === slug);
+
+if (!workEntry && !pageEntry) return Astro.redirect("/404/");
+
+let Content;
+let title: string;
+let heading: string;
+let description: string;
+let windowLabel: string;
+let showDescription: boolean;
+
+if (workEntry) {
+  ({ Content } = await render(workEntry));
+  title = workEntry.data.title;
+  heading = workEntry.data.title;
+  description = workEntry.data.summary;
+  windowLabel = `${workEntry.data.kind} · ${workEntry.data.yearLabel}`;
+  showDescription = true;
+} else {
+  ({ Content } = await render(pageEntry!));
+  title = pageEntry!.data.title;
+  heading = pageEntry!.data.heading ?? pageEntry!.data.title;
+  description = pageEntry!.data.description;
+  windowLabel = `/home/jakub/${slug}`;
+  showDescription = pageEntry!.data.showDescription;
+}
+---
+
+<BaseLayout title={title} description={description}>
+  {slug === "bachelor" && <MathStyles />}
+  <article class:list={["window", "article-page", `article-page--${slug}`, { "article-page--simple": !workEntry }]}>
+    <WindowBar title={`${slug}.md`} label={windowLabel} />
+    <div class="window__body">
+      {workEntry && <a class="back-link" href="/#work">← cd ..</a>}
+      <header class:list={["article-header", { "article-header--compact": !showDescription }]}>
+        <h1>{heading}</h1>
+        {showDescription && <p>{description}</p>}
+        {workEntry && (
+          <div class="metadata">
+            <span>{workEntry.data.kind}</span>
+            <span>{workEntry.data.yearLabel}</span>
+            <span>/{workEntry.data.slug}/</span>
+          </div>
+        )}
+      </header>
+      {workEntry?.data.visual.kind === "illustration" && (
+        <div class="article-project-visual">
+          <ProjectVisual visual={workEntry.data.visual} eager />
+        </div>
+      )}
+      <div class="prose">
+        <Content />
+      </div>
+    </div>
+  </article>
+</BaseLayout>

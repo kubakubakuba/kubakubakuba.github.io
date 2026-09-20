@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#090d12"/>
+  <path d="M0 0h1200v630H0z" fill="url(#g)"/>
+  <defs><radialGradient id="g" cx="0" cy="0" r="1" gradientTransform="translate(220 0) rotate(35) scale(800 600)"><stop stop-color="#65d6ad" stop-opacity=".14"/><stop offset="1" stop-color="#090d12" stop-opacity="0"/></radialGradient></defs>
+  <rect x="90" y="82" width="1020" height="466" rx="22" fill="#121a21" stroke="#374754" stroke-width="2"/>
+  <path d="M90 142h1020" stroke="#26333e" stroke-width="2"/>
+  <circle cx="124" cy="112" r="8" fill="#ed6a5e"/><circle cx="150" cy="112" r="8" fill="#f1bd66"/><circle cx="176" cy="112" r="8" fill="#65d6ad"/>
+  <text x="600" y="119" text-anchor="middle" fill="#9aa8b3" font-family="monospace" font-size="19">jakub@web: ~/profile</text>
+  <text x="150" y="274" fill="#65d6ad" font-family="monospace" font-size="25">RESEARCH · SOFTWARE · EDUCATION</text>
+  <text x="150" y="375" fill="#edf3ef" font-family="sans-serif" font-size="78" font-weight="700">Jakub Pelc</text>
+  <text x="150" y="445" fill="#bbc6cd" font-family="sans-serif" font-size="30">Projects, research, teaching, and personal work.</text>
+</svg>

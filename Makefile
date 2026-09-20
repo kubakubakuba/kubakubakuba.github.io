@@ -1,5 +1,12 @@
 default:
-	hugo -t hugo-theme-shell
+	npm run build
 
 server:
-	hugo server -t hugo-theme-shell --buildDrafts --watch
+	npm run dev
+
+check:
+	npm run check
+
+test:
+	npm run build
+	npm run test:routes

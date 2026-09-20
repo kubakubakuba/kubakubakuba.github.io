@@ -1,0 +1,34 @@
+---
+import { Image } from "astro:assets";
+import profile from "../assets/images/profile.jpg";
+---
+
+<section class="cv-intro" aria-label="CV introduction">
+  <div class="cv-intro__copy">
+    <p class="cv-intro__role">
+      Master's degree student of <a href="https://oi.fel.cvut.cz/cs/">Open Informatics</a> at{" "}
+      <a href="https://fel.cvut.cz/cs">FEE CTU in Prague</a>.
+    </p>
+    <nav class="cv-intro__links" aria-label="CV links">
+      <a href="https://swpelc.eu">swpelc.eu</a>
+      <a href="mailto:contact@swpelc.eu">contact@swpelc.eu</a>
+      <a href="https://www.linkedin.com/in/jakub-pelc-a74828235/">LinkedIn</a>
+      <a href="https://github.com/kubakubakuba">GitHub</a>
+      <a href="https://www.instagram.com/pelc.jakub/">Instagram</a>
+    </nav>
+    <p>
+      I'm interested in machine learning, drones, web development, astronomy, travelling, photography,
+      and self improvement.
+    </p>
+  </div>
+  <figure class="cv-intro__portrait">
+    <Image
+      src={profile}
+      alt="Profile photo"
+      widths={[320, 480, 640]}
+      sizes="(max-width: 680px) 100vw, 280px"
+      loading="eager"
+    />
+    <figcaption>Illecillewaet Glacier, Canada, 2023</figcaption>
+  </figure>
+</section>

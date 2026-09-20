@@ -1,0 +1,26 @@
+---
+import type { CollectionEntry } from "astro:content";
+import ProjectVisual from "./ProjectVisual.astro";
+import WindowBar from "./WindowBar.astro";
+
+interface Props {
+  entry: CollectionEntry<"work">;
+  featured?: boolean;
+  eager?: boolean;
+}
+
+const { entry, featured = false, eager = false } = Astro.props;
+const { title, summary, yearLabel, slug, visual } = entry.data;
+---
+
+<a class:list={["project-card", { "project-card--featured": featured }]} href={`/${slug}/`} draggable="false">
+  <article class="window">
+    <WindowBar title={title} label={yearLabel} />
+    <ProjectVisual visual={visual} eager={eager} />
+    <div class="project-card__copy">
+      <h3>{title}</h3>
+      <p>{summary}</p>
+      <span class="project-card__open">Open project <span aria-hidden="true">→</span></span>
+    </div>
+  </article>
+</a>

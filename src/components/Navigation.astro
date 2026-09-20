@@ -1,0 +1,24 @@
+---
+const pathname = Astro.url.pathname;
+const links = [
+  { href: "/", label: "Home", active: pathname === "/" },
+  { href: "/#work", label: "Work", active: false },
+  { href: "/cv/", label: "CV", active: pathname === "/cv/" },
+  { href: "/contact/", label: "Contact", active: pathname === "/contact/" },
+];
+---
+
+<header class="topbar">
+  <div class="topbar__inner">
+    <a class="topbar__identity" href="/" aria-label="Jakub Pelc, home">
+      <span class="topbar__prompt" aria-hidden="true">~/</span>
+      <span>jakub.pelc</span>
+    </a>
+    <nav class="topbar__nav" aria-label="Primary navigation">
+      {links.map((link) => (
+        <a href={link.href} aria-current={link.active ? "page" : undefined}>{link.label}</a>
+      ))}
+    </nav>
+    <span class="topbar__status"><i aria-hidden="true"></i> available</span>
+  </div>
+</header>

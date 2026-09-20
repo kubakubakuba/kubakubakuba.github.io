@@ -1,0 +1,29 @@
+---
+interface Props { alt: string }
+const { alt } = Astro.props;
+---
+
+<svg class="technical-illustration" viewBox="0 0 720 420" role="img" aria-label={alt}>
+  <defs>
+    <linearGradient id="enak-line" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f1bd66" /><stop offset="1" stop-color="#65d6ad" />
+    </linearGradient>
+    <filter id="enak-glow"><feGaussianBlur stdDeviation="7" /></filter>
+  </defs>
+  <g opacity="0.16" fill="#f1bd66" filter="url(#enak-glow)">
+    <circle cx="360" cy="210" r="55" /><circle cx="160" cy="128" r="30" /><circle cx="565" cy="115" r="30" />
+  </g>
+  <g fill="none" stroke="#33414d" stroke-width="2">
+    <path d="M160 128L360 210L565 115M360 210L570 320M360 210L145 315M160 128L145 315M565 115L570 320" />
+  </g>
+  <path d="M160 128L360 210L570 320" fill="none" stroke="url(#enak-line)" stroke-width="3" stroke-dasharray="7 10" />
+  <g stroke-width="2">
+    <g transform="translate(360 210)" fill="#121a21" stroke="#f1bd66"><circle r="48" /><path d="M-12-6h24l-8 14H-5l-7 13 3-18h9z" fill="#f1bd66" stroke="none" /></g>
+    <g transform="translate(160 128)" fill="#121a21" stroke="#65d6ad"><circle r="31" /><path d="M-12 3h24M0-12v24" /></g>
+    <g transform="translate(565 115)" fill="#121a21" stroke="#66b8ff"><circle r="31" /><path d="M-13 8h26M-8 8l5-18h7l5 18" /></g>
+    <g transform="translate(145 315)" fill="#121a21" stroke="#e27d9c"><circle r="31" /><path d="M-13-9h26v18h-26zM-7-4h5v5h-5zM3-4h5v5H3z" /></g>
+    <g transform="translate(570 320)" fill="#121a21" stroke="#f1bd66"><circle r="31" /><path d="M-14 7h28M-10 7l4-17M10 7L6-10M-7-10h14" /></g>
+  </g>
+  <text x="48" y="55" fill="#7d8b98" font-family="CommitMono, monospace" font-size="13">ENERGY / LEARNING / MAKING</text>
+  <text x="320" y="285" fill="#f1bd66" font-family="CommitMono, monospace" font-size="12">ENAK.NODE</text>
+</svg>

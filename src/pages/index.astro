@@ -1,0 +1,203 @@
+---
+import { Image } from "astro:assets";
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import WindowFrame from "../components/WindowFrame.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import portrait from "../assets/images/profile.jpg";
+
+const work = (await getCollection("work")).sort((a, b) => a.data.order - b.data.order);
+const featured = work.filter((entry) => entry.data.featured);
+const secondary = work.filter((entry) => !entry.data.featured);
+const profile = (await getCollection("pages")).find((entry) => entry.data.slug === "profile");
+
+if (!profile) throw new Error("Profile content is required for the homepage.");
+const { Content: ProfileContent } = await render(profile);
+---
+
+<BaseLayout>
+  <div class="home-stack">
+    <WindowFrame title="jakub@web: ~/profile" label="online" class="hero-window">
+      <div class="hero-copy">
+        <h1><span class="hero-copy__intro">Hello, I'm</span><span class="hero-copy__name">Jakub Pelc</span></h1>
+        <div class="hero-profile prose">
+          <ProfileContent />
+        </div>
+        <div class="hero-actions">
+          <a class="button button--primary" href="#work">Explore work <span aria-hidden="true">↓</span></a>
+          <a class="button" href="mailto:contact@swpelc.eu">contact@swpelc.eu</a>
+        </div>
+      </div>
+      <div class="portrait-shell">
+        <Image
+          src={portrait}
+          alt="Jakub Pelc at Illecillewaet Glacier in Canada"
+          widths={[360, 540, 720]}
+          sizes="(max-width: 680px) 270px, 310px"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+    </WindowFrame>
+
+    <section id="work" aria-labelledby="featured-title">
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">Featured work</span>
+          <h2 id="featured-title">Selected projects</h2>
+        </div>
+      </div>
+      <div class="featured-grid">
+        {featured.map((entry, index) => <ProjectCard entry={entry} featured eager={index === 0} />)}
+      </div>
+    </section>
+
+    <section aria-labelledby="more-work-title">
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">More work</span>
+          <h2 id="more-work-title">Projects & talks</h2>
+        </div>
+      </div>
+      <div class="secondary-grid">
+        {secondary.map((entry) => <ProjectCard entry={entry} />)}
+      </div>
+    </section>
+
+  </div>
+</BaseLayout>
+
+<script>
+  const motionPreference = window.matchMedia("(prefers-reduced-motion: no-preference)");
+
+  if (motionPreference.matches) {
+    document.querySelectorAll<HTMLElement>(".project-card").forEach((card) => {
+      const windowElement = card.querySelector<HTMLElement>(".window");
+      if (!windowElement) return;
+
+      card.setAttribute("draggable", "false");
+      card.addEventListener("dragstart", (event) => event.preventDefault());
+
+      let drag:
+        | {
+            pointerId: number;
+            startX: number;
+            startY: number;
+            lastX: number;
+            lastY: number;
+            lastTime: number;
+            x: number;
+            y: number;
+            vx: number;
+            vy: number;
+            moved: boolean;
+          }
+        | undefined;
+      let animationFrame = 0;
+      let suppressClick = false;
+
+      const stopGlide = () => {
+        if (animationFrame) cancelAnimationFrame(animationFrame);
+        animationFrame = 0;
+        card.classList.remove("is-gliding");
+      };
+
+      const render = (x: number, y: number) => {
+        const rotation = Math.max(-3, Math.min(3, x * 0.025));
+        windowElement.style.transform = `translate3d(${x}px, ${y}px, 0) rotate(${rotation}deg)`;
+      };
+
+      const glideBack = (x: number, y: number, vx: number, vy: number) => {
+        card.classList.add("is-gliding");
+
+        const tick = () => {
+          vx *= 0.9;
+          vy *= 0.9;
+          x += vx;
+          y += vy;
+          vx -= x * 0.018;
+          vy -= y * 0.018;
+          render(x, y);
+
+          if (Math.abs(x) + Math.abs(y) + Math.abs(vx) + Math.abs(vy) > 0.35) {
+            animationFrame = requestAnimationFrame(tick);
+          } else {
+            animationFrame = 0;
+            windowElement.style.transform = "";
+            card.classList.remove("is-gliding");
+          }
+        };
+
+        animationFrame = requestAnimationFrame(tick);
+      };
+
+      card.addEventListener("pointerdown", (event) => {
+        if (event.pointerType !== "mouse" || event.button !== 0) return;
+
+        stopGlide();
+        drag = {
+          pointerId: event.pointerId,
+          startX: event.clientX,
+          startY: event.clientY,
+          lastX: event.clientX,
+          lastY: event.clientY,
+          lastTime: event.timeStamp,
+          x: 0,
+          y: 0,
+          vx: 0,
+          vy: 0,
+          moved: false,
+        };
+        card.classList.add("is-dragging");
+        card.setPointerCapture(event.pointerId);
+      });
+
+      card.addEventListener("pointermove", (event) => {
+        if (!drag || event.pointerId !== drag.pointerId) return;
+
+        const x = event.clientX - drag.startX;
+        const y = event.clientY - drag.startY;
+        const distance = Math.hypot(x, y);
+        if (!drag.moved && distance < 6) return;
+
+        event.preventDefault();
+        drag.moved = true;
+        const elapsed = Math.max(8, event.timeStamp - drag.lastTime);
+        drag.vx = Math.max(-24, Math.min(24, (event.clientX - drag.lastX) / elapsed * 16));
+        drag.vy = Math.max(-24, Math.min(24, (event.clientY - drag.lastY) / elapsed * 16));
+        drag.x = x;
+        drag.y = y;
+        drag.lastX = event.clientX;
+        drag.lastY = event.clientY;
+        drag.lastTime = event.timeStamp;
+        render(x, y);
+      });
+
+      const finishDrag = (event: PointerEvent) => {
+        if (!drag || event.pointerId !== drag.pointerId) return;
+
+        const released = drag;
+        drag = undefined;
+        card.classList.remove("is-dragging");
+        if (card.hasPointerCapture(event.pointerId)) card.releasePointerCapture(event.pointerId);
+
+        if (!released.moved) {
+          windowElement.style.transform = "";
+          return;
+        }
+
+        suppressClick = true;
+        glideBack(released.x, released.y, released.vx, released.vy);
+      };
+
+      card.addEventListener("pointerup", finishDrag);
+      card.addEventListener("pointercancel", finishDrag);
+      card.addEventListener("click", (event) => {
+        if (!suppressClick) return;
+        event.preventDefault();
+        event.stopPropagation();
+        suppressClick = false;
+      });
+    });
+  }
+</script>

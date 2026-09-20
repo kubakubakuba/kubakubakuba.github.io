@@ -1,0 +1,30 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import ThesisIllustration from "./illustrations/ThesisIllustration.astro";
+import EnakIllustration from "./illustrations/EnakIllustration.astro";
+
+interface Props {
+  visual: CollectionEntry<"work">["data"]["visual"];
+  eager?: boolean;
+}
+
+const { visual, eager = false } = Astro.props;
+---
+
+<div class="project-visual">
+  {visual.kind === "image" ? (
+    <Image
+      src={visual.src}
+      alt={visual.alt}
+      widths={[480, 720, 1080]}
+      sizes="(max-width: 760px) 100vw, 640px"
+      loading={eager ? "eager" : "lazy"}
+      decoding="async"
+    />
+  ) : visual.name === "thesis" ? (
+    <ThesisIllustration alt={visual.alt} />
+  ) : (
+    <EnakIllustration alt={visual.alt} />
+  )}
+</div>

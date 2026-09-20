@@ -1,0 +1,15 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import WindowFrame from "../components/WindowFrame.astro";
+---
+
+<BaseLayout title="Page not found" description="The requested page could not be found.">
+  <div class="not-found">
+    <WindowFrame title="bash" label="exit 127">
+      <span class="terminal-line">jakub@web:~$ open requested-page</span>
+      <h1>404</h1>
+      <p>bash: requested-page: No such file or directory</p>
+      <a class="button button--primary" href="/">Return home <span aria-hidden="true">→</span></a>
+    </WindowFrame>
+  </div>
+</BaseLayout>
