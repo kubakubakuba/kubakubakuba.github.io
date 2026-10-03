@@ -1,0 +1,271 @@
+<dialog class="image-lightbox" data-image-lightbox aria-labelledby="image-lightbox-caption">
+  <div class="image-lightbox__shell">
+    <button class="image-lightbox__close" type="button" data-lightbox-close aria-label="Close enlarged image">
+      <span aria-hidden="true">×</span>
+    </button>
+
+    <button class="image-lightbox__nav image-lightbox__nav--previous" type="button" data-lightbox-previous aria-label="Previous image">
+      <span aria-hidden="true">←</span>
+    </button>
+
+    <figure class="image-lightbox__figure">
+      <div class="image-lightbox__stage">
+        <img data-lightbox-image src="" alt="" />
+      </div>
+      <figcaption id="image-lightbox-caption" class="image-lightbox__caption">
+        <span data-lightbox-description></span>
+        <span class="image-lightbox__count" data-lightbox-count aria-live="polite"></span>
+      </figcaption>
+    </figure>
+
+    <button class="image-lightbox__nav image-lightbox__nav--next" type="button" data-lightbox-next aria-label="Next image">
+      <span aria-hidden="true">→</span>
+    </button>
+  </div>
+</dialog>
+
+<script>
+  const lightbox = document.querySelector<HTMLDialogElement>("[data-image-lightbox]");
+
+  if (lightbox) {
+    const image = lightbox.querySelector<HTMLImageElement>("[data-lightbox-image]");
+    const description = lightbox.querySelector<HTMLElement>("[data-lightbox-description]");
+    const count = lightbox.querySelector<HTMLElement>("[data-lightbox-count]");
+    const previousButton = lightbox.querySelector<HTMLButtonElement>("[data-lightbox-previous]");
+    const nextButton = lightbox.querySelector<HTMLButtonElement>("[data-lightbox-next]");
+    const closeButton = lightbox.querySelector<HTMLButtonElement>("[data-lightbox-close]");
+
+    let items: HTMLAnchorElement[] = [];
+    let currentIndex = 0;
+    let trigger: HTMLAnchorElement | null = null;
+
+    const showItem = (index: number) => {
+      if (!image || !description || !count || items.length === 0) return;
+
+      currentIndex = (index + items.length) % items.length;
+      const item = items[currentIndex];
+      const itemImage = item.querySelector<HTMLImageElement>("img");
+      const text = item.dataset.lightboxDescription || itemImage?.alt || "";
+
+      image.src = item.href;
+      image.alt = itemImage?.alt || text;
+      description.textContent = text;
+      count.textContent = items.length > 1 ? `${currentIndex + 1} / ${items.length}` : "";
+
+      const hasNavigation = items.length > 1;
+      if (previousButton) previousButton.hidden = !hasNavigation;
+      if (nextButton) nextButton.hidden = !hasNavigation;
+    };
+
+    const changeItem = (step: number) => showItem(currentIndex + step);
+
+    document.querySelectorAll<HTMLAnchorElement>("a[data-lightbox]").forEach((item) => {
+      item.addEventListener("click", (event) => {
+        event.preventDefault();
+        trigger = item;
+
+        const group = item.dataset.lightboxGroup;
+        items = group
+          ? Array.from(document.querySelectorAll<HTMLAnchorElement>("a[data-lightbox-group]"))
+              .filter((candidate) => candidate.dataset.lightboxGroup === group)
+          : [item];
+
+        showItem(Math.max(0, items.indexOf(item)));
+        lightbox.showModal();
+        document.body.classList.add("has-open-lightbox");
+        closeButton?.focus();
+      });
+    });
+
+    previousButton?.addEventListener("click", () => changeItem(-1));
+    nextButton?.addEventListener("click", () => changeItem(1));
+    closeButton?.addEventListener("click", () => lightbox.close());
+
+    lightbox.addEventListener("click", (event) => {
+      const target = event.target;
+      if (
+        target === lightbox ||
+        (target instanceof HTMLElement && (
+          target.classList.contains("image-lightbox__shell") ||
+          target.classList.contains("image-lightbox__stage")
+        ))
+      ) {
+        lightbox.close();
+      }
+    });
+
+    lightbox.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowLeft" && items.length > 1) {
+        event.preventDefault();
+        changeItem(-1);
+      }
+
+      if (event.key === "ArrowRight" && items.length > 1) {
+        event.preventDefault();
+        changeItem(1);
+      }
+    });
+
+    lightbox.addEventListener("close", () => {
+      document.body.classList.remove("has-open-lightbox");
+      image?.removeAttribute("src");
+      trigger?.focus();
+      trigger = null;
+    });
+  }
+</script>
+
+<style>
+  .image-lightbox {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    max-width: none;
+    height: 100vh;
+    height: 100dvh;
+    max-height: 100vh;
+    max-height: 100dvh;
+    overflow: hidden;
+    padding: 0;
+    border: 0;
+    margin: 0;
+    color: var(--text);
+    background: rgb(5 8 11 / 0.94);
+  }
+
+  .image-lightbox::backdrop {
+    background: rgb(5 8 11 / 0.94);
+    backdrop-filter: blur(10px);
+  }
+
+  .image-lightbox__shell {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    grid-template-columns: clamp(3.25rem, 8vw, 6rem) minmax(0, 1fr) clamp(3.25rem, 8vw, 6rem);
+    grid-template-rows: minmax(0, 1fr);
+    padding: clamp(3.75rem, 7vw, 5rem) 0 1rem;
+  }
+
+  .image-lightbox__figure {
+    display: grid;
+    min-width: 0;
+    min-height: 0;
+    height: 100%;
+    max-height: 100%;
+    grid-column: 2;
+    grid-row: 1;
+    grid-template-rows: minmax(0, 1fr) auto;
+    gap: 0.8rem;
+    margin: 0;
+  }
+
+  .image-lightbox__stage {
+    display: grid;
+    min-height: 0;
+    overflow: hidden;
+    place-items: center;
+  }
+
+  .image-lightbox__stage img {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    max-height: 100%;
+    min-width: 0;
+    min-height: 0;
+    border-radius: 5px;
+    box-shadow: 0 20px 70px rgb(0 0 0 / 0.55);
+    object-fit: contain;
+    object-position: center;
+  }
+
+  .image-lightbox__caption {
+    display: flex;
+    min-height: 2.25rem;
+    gap: 1rem;
+    align-items: start;
+    justify-content: space-between;
+    padding: 0.55rem 0.7rem;
+    border-top: 1px solid var(--line);
+    color: var(--muted-strong);
+    font: 0.74rem/1.5 var(--mono);
+  }
+
+  .image-lightbox__count {
+    flex: none;
+    color: var(--green);
+  }
+
+  .image-lightbox__close,
+  .image-lightbox__nav {
+    display: grid;
+    border: 1px solid var(--line-strong);
+    color: var(--text);
+    background: rgb(15 21 28 / 0.88);
+    cursor: pointer;
+    place-items: center;
+    transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
+  }
+
+  .image-lightbox__nav--previous {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .image-lightbox__nav--next {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  .image-lightbox__close:hover,
+  .image-lightbox__nav:hover {
+    border-color: var(--green);
+    color: var(--green);
+    background: var(--panel);
+  }
+
+  .image-lightbox__close {
+    position: fixed;
+    z-index: 1;
+    top: 1rem;
+    right: 1rem;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    font: 1.5rem/1 var(--mono);
+  }
+
+  .image-lightbox__nav {
+    width: 2.8rem;
+    height: 3.8rem;
+    align-self: center;
+    justify-self: center;
+    border-radius: 7px;
+    font: 1.2rem/1 var(--mono);
+  }
+
+  .image-lightbox__nav[hidden] {
+    display: none;
+  }
+
+  @media (max-width: 600px) {
+    .image-lightbox__shell {
+      grid-template-columns: 3.25rem minmax(0, 1fr) 3.25rem;
+      padding-top: 4.25rem;
+    }
+
+    .image-lightbox__nav {
+      width: 2.5rem;
+      height: 3.25rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .image-lightbox__close,
+    .image-lightbox__nav {
+      transition: none;
+    }
+  }
+</style>

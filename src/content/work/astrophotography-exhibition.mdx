@@ -1,0 +1,70 @@
+---
+title: "Photography exhibition"
+summary: "A series of phohographs with which I managed to win 1st place in a photography competition at CTU in Prague"
+kind: photography
+yearLabel: "2026"
+slug: astrophotography-exhibition
+featured: false
+order: 5
+visual:
+  kind: image
+  src: "../../assets/images/photography/astro-cd-cover.avif"
+  alt: "Artwork for the astrophotography exhibition CD cover"
+---
+
+import Figure from "../../components/Figure.astro";
+import PhotoGallery from "../../components/PhotoGallery.astro";
+import cover from "../../assets/images/photography/astro-cd-cover.avif";
+import babyEagle from "../../assets/images/photography/astro-01-baby-eagle.avif";
+import vdb158 from "../../assets/images/photography/astro-02-vdb158.avif";
+import iris from "../../assets/images/photography/astro-03-iris.avif";
+import shark from "../../assets/images/photography/astro-04-shark.avif";
+import jellyfish from "../../assets/images/photography/astro-05-jellyfish.avif";
+import elephantsTrunk from "../../assets/images/photography/astro-06-elephants-trunk.avif";
+import heart from "../../assets/images/photography/astro-07-heart.avif";
+import casper from "../../assets/images/photography/astro-08-casper.avif";
+import horsehead from "../../assets/images/photography/astro-09-horsehead.avif";
+import orion from "../../assets/images/photography/astro-10-orion.avif";
+import vernissageWinners from "../../assets/images/photography/dif-vernisaz-1.avif";
+import vernissageGroup from "../../assets/images/photography/dif-vernisaz-2.avif";
+import vernissageSigning from "../../assets/images/photography/dif-vernisaz-12.avif";
+
+## About
+
+The competition was based about the topics "From the shadows" and "Questions and Answers", to which I answered with this collection of photographs
+showing several astrophotography targets. The project description and the interview with the first 3 places can be found below:
+
+- [Astrophotography competition course page (Czech)](https://cw.fel.cvut.cz/b252/courses/a7b33dif/06_sinslavy)
+- [FEL ČVUT article about the exhibition and projects (Czech)](https://fel.cvut.cz/cs/aktualne/novinky/84499-astrofotografie-i-snimky-bezdomovcu-studenti-cvut-predstavili-sve-projekty-na-tema-ze-stinu-q-a)
+- [Gallery](http://bresson.felk.cvut.cz/index.php?/category/241)
+
+<Figure src={cover} alt="Astrophotography CD cover artwork" caption="Cover artwork for the CD submission" />
+
+## Exhibition photographs
+
+<PhotoGallery photos={[
+  { src: babyEagle, alt: "The Baby Eagle Nebula surrounded by stars", caption: "Baby Eagle" },
+  { src: vdb158, alt: "The faint reflection nebula VdB 158", caption: "Blue Flame" },
+  { src: iris, alt: "The blue Iris Nebula among dark dust clouds", caption: "Iris" },
+  { src: shark, alt: "The Shark Nebula in a field of stars", caption: "Shark" },
+  { src: jellyfish, alt: "The Jellyfish Nebula glowing against deep space", caption: "Jellyfish" },
+  { src: elephantsTrunk, alt: "The Elephant's Trunk Nebula and surrounding star field", caption: "Elephant's" },
+  { src: heart, alt: "The Heart Nebula", caption: "Heart" },
+  { src: casper, alt: "The pale Casper the Friendly Ghost Nebula", caption: "Casper the Friendly Ghost" },
+  { src: horsehead, alt: "The Horsehead Nebula silhouetted against glowing gas", caption: "Horsehead" },
+  { src: orion, alt: "The Orion Nebula in the constellation Orion", caption: "Orion" },
+]} />
+
+## Competition and vernissage
+
+<PhotoGallery photos={[
+  { src: vernissageWinners, alt: "The first three astrophotography competition winners holding their awards", caption: "Competition · first three places" },
+  { src: vernissageGroup, alt: "Students, guests, and organizers gathered at the astrophotography exhibition vernissage", caption: "Vernissage · group photograph" },
+  { src: vernissageSigning, alt: "An exhibition participant signing an astrophotography display board", caption: "Vernissage · signing the exhibition" },
+]} />
+
+## Project documents
+
+- [Exhibition description (PDF, Czech)](/photography/dif_pelc_popis_novy.pdf)
+- [Essay: *Photography as a bridge between people and the universe* (PDF, Czech)](/photography/pelcjaku_esej.pdf)
+- [FEL ČVUT article (PDF backup, Czech)](/photography/astrophotografie-fel-cvut-q-and-a.pdf)

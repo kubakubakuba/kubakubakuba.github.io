@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import Navigation from "../components/Navigation.astro";
+import ImageLightbox from "../components/ImageLightbox.astro";
 
 interface Props {
   title?: string;
@@ -50,5 +51,6 @@ const analyticsId = "G-4SVEVVKG8L";
     <main id="main-content" class="site-main">
       <slot />
     </main>
+    <ImageLightbox />
   </body>
 </html>

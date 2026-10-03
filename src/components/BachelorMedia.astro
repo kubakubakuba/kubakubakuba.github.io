@@ -1,0 +1,27 @@
+---
+import Figure from "./Figure.astro";
+import ImageComparison from "./ImageComparison.astro";
+import p3p from "../assets/images/p3p.avif";
+import uav33 from "../assets/images/uav33.avif";
+import uav33Basler from "../assets/images/uav33_basler.avif";
+import uav33Event from "../assets/images/uav33_event.avif";
+import lattice from "../assets/images/lattice_280deg_lens.avif";
+import blobsEventCamera from "../assets/images/blobs_event_camera.avif";
+---
+
+<section class="bachelor-media" aria-labelledby="bachelor-images-title">
+  <h2 id="bachelor-images-title">Images</h2>
+
+  <ImageComparison
+    before={uav33Basler}
+    after={uav33Event}
+    beforeLabel="Basler · color"
+    afterLabel="Event camera"
+    caption="Drag the slider to compare the color Basler image with the event-camera image."
+  />
+
+  <Figure src={uav33} alt="UAV33 platform" caption="UAV33 platform" />
+  <Figure src={p3p} alt="P3P calibration visualization" caption="P3P calibration visualization" />
+  <Figure src={lattice} alt="Lattice captured through a 280-degree lens" caption="Lattice captured through a 280-degree lens" />
+  <Figure src={blobsEventCamera} alt="Blob detection on an event-camera image" caption="Blob detection on an event-camera image" />
+</section>

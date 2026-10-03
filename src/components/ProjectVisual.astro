@@ -7,19 +7,29 @@ import EnakIllustration from "./illustrations/EnakIllustration.astro";
 interface Props {
   visual: CollectionEntry<"work">["data"]["visual"];
   eager?: boolean;
+  card?: boolean;
+  featured?: boolean;
 }
 
-const { visual, eager = false } = Astro.props;
+const { visual, eager = false, card = false, featured = false } = Astro.props;
+const imageSizes = card
+  ? featured
+    ? "(max-width: 680px) calc(100vw - 3rem), (max-width: 900px) calc(100vw - 5rem), (max-width: 1240px) calc(33vw - 2.5rem), 370px"
+    : "(max-width: 680px) calc(100vw - 3rem), (max-width: 900px) calc(50vw - 3rem), (max-width: 1240px) calc(33vw - 2.5rem), 370px"
+  : "(max-width: 760px) 100vw, 960px";
 ---
 
 <div class="project-visual">
   {visual.kind === "image" ? (
     <Image
       src={visual.src}
+      format="webp"
+      quality={68}
       alt={visual.alt}
-      widths={[480, 720, 1080]}
-      sizes="(max-width: 760px) 100vw, 640px"
+      widths={[320, 480, 720, 960, 1080]}
+      sizes={imageSizes}
       loading={eager ? "eager" : "lazy"}
+      fetchpriority={eager ? "high" : "auto"}
       decoding="async"
     />
   ) : visual.name === "thesis" ? (

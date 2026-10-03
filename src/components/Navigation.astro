@@ -3,6 +3,7 @@ const pathname = Astro.url.pathname;
 const links = [
   { href: "/", label: "Home", active: pathname === "/" },
   { href: "/#work", label: "Work", active: false },
+  { href: "/photography/", label: "Photography", active: pathname === "/photography/" },
   { href: "/cv/", label: "CV", active: pathname === "/cv/" },
   { href: "/contact/", label: "Contact", active: pathname === "/contact/" },
 ];

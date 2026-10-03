@@ -4,12 +4,12 @@ summary: "Relative Pose Estimation Using Event-Based Measurements of LED Signals
 kind: research
 yearLabel: "2025"
 slug: bachelor
-featured: true
-order: 1
+featured: false
+order: 6
 visual:
-  kind: illustration
-  name: thesis
-  alt: "Event measurements converging on a relative pose coordinate system"
+  kind: image
+  src: "../../assets/images/uav33_event.avif"
+  alt: "Event-camera view from the UAV33 platform"
 ---
 
 ***Relative Pose Estimation Using Event-Based Measurements of LED Signals***

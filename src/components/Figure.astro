@@ -13,13 +13,22 @@ const { src, alt, caption, portrait = false } = Astro.props;
 ---
 
 <figure class:list={["content-figure", { "content-figure--portrait": portrait }]}>
-  <Image
-    src={src}
-    alt={alt}
-    widths={[480, 768, 1080, 1440]}
-    sizes={portrait ? "(max-width: 760px) 100vw, 720px" : "(max-width: 760px) 100vw, 960px"}
-    loading="lazy"
-    decoding="async"
-  />
+  <a
+    class="content-figure__image"
+    href={src.src}
+    aria-label={`Enlarge image: ${caption || alt}`}
+    data-lightbox
+    data-lightbox-description={caption || alt}
+  >
+    <Image
+      src={src}
+      format="avif"
+      alt={alt}
+      widths={[480, 768, 1080, 1440]}
+      sizes={portrait ? "(max-width: 760px) 100vw, 720px" : "(max-width: 760px) 100vw, 960px"}
+      loading="lazy"
+      decoding="async"
+    />
+  </a>
   {caption && <figcaption>{caption}</figcaption>}
 </figure>

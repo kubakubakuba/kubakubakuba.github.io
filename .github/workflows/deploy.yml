@@ -20,6 +20,28 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
+      - name: Download media archive
+        env:
+          MEDIA_ARCHIVE_URL: ${{ secrets.MEDIA_ARCHIVE_URL }}
+        run: |
+          set -euo pipefail
+
+          if [[ -z "${MEDIA_ARCHIVE_URL}" ]]; then
+            echo "MEDIA_ARCHIVE_URL is not configured in GitHub Actions secrets." >&2
+            exit 1
+          fi
+
+          archive_path="${RUNNER_TEMP}/media.zip"
+          curl --fail --location --retry 3 --retry-delay 2 --silent --show-error --proto "=https" --tlsv1.2 "${MEDIA_ARCHIVE_URL}" --output "${archive_path}"
+
+          if unzip -Z1 "${archive_path}" | grep -Eq "(^/|(^|/)[.][.])"; then
+            echo "The media archive contains an unsafe path." >&2
+            exit 1
+          fi
+
+          mkdir -p src/assets/images
+
+          unzip -q -o "${archive_path}" -d src/assets/images
       - name: Install, verify, build, and upload
         uses: withastro/action@v6
         with:

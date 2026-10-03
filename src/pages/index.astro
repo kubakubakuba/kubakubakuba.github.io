@@ -4,7 +4,7 @@ import { getCollection, render } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import WindowFrame from "../components/WindowFrame.astro";
 import ProjectCard from "../components/ProjectCard.astro";
-import portrait from "../assets/images/profile.jpg";
+import portrait from "../assets/images/profile.avif";
 
 const work = (await getCollection("work")).sort((a, b) => a.data.order - b.data.order);
 const featured = work.filter((entry) => entry.data.featured);
@@ -31,11 +31,14 @@ const { Content: ProfileContent } = await render(profile);
       <div class="portrait-shell">
         <Image
           src={portrait}
+          format="webp"
+          quality={72}
           alt="Jakub Pelc at Illecillewaet Glacier in Canada"
           widths={[360, 540, 720]}
           sizes="(max-width: 680px) 270px, 310px"
           loading="eager"
           fetchpriority="high"
+          decoding="async"
         />
       </div>
     </WindowFrame>
@@ -44,7 +47,7 @@ const { Content: ProfileContent } = await render(profile);
       <div class="section-heading">
         <div>
           <span class="section-kicker">Featured work</span>
-          <h2 id="featured-title">Selected projects</h2>
+          <!--<h2 id="featured-title">Selected projects</h2> -->
         </div>
       </div>
       <div class="featured-grid">
@@ -56,7 +59,7 @@ const { Content: ProfileContent } = await render(profile);
       <div class="section-heading">
         <div>
           <span class="section-kicker">More work</span>
-          <h2 id="more-work-title">Projects & talks</h2>
+          <!--<h2 id="more-work-title">Other projects</h2> -->
         </div>
       </div>
       <div class="secondary-grid">

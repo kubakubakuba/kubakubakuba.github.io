@@ -16,7 +16,7 @@ const { title, summary, yearLabel, slug, visual } = entry.data;
 <a class:list={["project-card", { "project-card--featured": featured }]} href={`/${slug}/`} draggable="false">
   <article class="window">
     <WindowBar title={title} label={yearLabel} />
-    <ProjectVisual visual={visual} eager={eager} />
+    <ProjectVisual visual={visual} eager={eager} card featured={featured} />
     <div class="project-card__copy">
       <h3>{title}</h3>
       <p>{summary}</p>

@@ -2,3 +2,5 @@
 /dist/
 /.astro/
 /node_modules/
+temp/
+src/assets/images/

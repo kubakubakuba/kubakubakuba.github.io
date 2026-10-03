@@ -8,7 +8,7 @@ const work = defineCollection({
     z.object({
       title: z.string(),
       summary: z.string(),
-      kind: z.enum(["research", "software", "education", "talk"]),
+      kind: z.enum(["research", "software", "education", "talk", "photography"]),
       yearLabel: z.string(),
       slug: z.string(),
       featured: z.boolean().default(false),

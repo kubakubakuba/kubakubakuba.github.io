@@ -53,6 +53,10 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+body.has-open-lightbox {
+  overflow: hidden;
+}
+
 body::before {
   position: fixed;
   z-index: 0;
@@ -385,7 +389,7 @@ svg {
   border-radius: 4px;
   color: var(--muted-strong);
   background: rgb(9 13 18 / 0.88);
-  content: "jakub.jpg";
+  content: "profile.avif";
   font: 0.66rem var(--mono);
 }
 
@@ -742,14 +746,28 @@ svg {
   margin-bottom: 1.1rem;
 }
 
+.prose ul,
+.prose ol {
+  padding-left: 1.35rem;
+}
+
+.prose ul {
+  list-style: disc;
+}
+
+.prose ol {
+  list-style: decimal;
+}
+
 .prose a {
-  color: var(--text);
+  color: var(--green);
   text-decoration-color: rgb(101 214 173 / 0.65);
   text-decoration-thickness: 1px;
 }
 
 .prose a:hover {
-  color: var(--green);
+  color: #9aebcf;
+  text-decoration-color: #9aebcf;
 }
 
 .prose a.easter-egg,
@@ -766,7 +784,7 @@ svg {
   margin-top: 0.35rem;
 }
 
-.prose .hero-profile li + li {
+.prose.hero-profile li + li {
   margin-top: 0;
 }
 
@@ -802,6 +820,12 @@ svg {
   margin-block: clamp(2rem, 7vw, 4.5rem);
 }
 
+.content-figure__image {
+  display: block;
+  border-radius: 9px;
+  cursor: zoom-in;
+}
+
 .content-figure img {
   width: 100%;
   max-height: 760px;
@@ -812,6 +836,11 @@ svg {
 }
 
 .content-figure--portrait img {
+  width: min(100%, 720px);
+  margin-inline: auto;
+}
+
+.content-figure--portrait .content-figure__image {
   width: min(100%, 720px);
   margin-inline: auto;
 }

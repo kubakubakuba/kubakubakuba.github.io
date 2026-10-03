@@ -3,6 +3,7 @@ import { getCollection, render } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ProjectVisual from "../components/ProjectVisual.astro";
 import MathStyles from "../components/MathStyles.astro";
+import BachelorMedia from "../components/BachelorMedia.astro";
 import WindowBar from "../components/WindowBar.astro";
 
 export async function getStaticPaths() {
@@ -62,13 +63,14 @@ if (workEntry) {
           </div>
         )}
       </header>
-      {workEntry?.data.visual.kind === "illustration" && (
+      {workEntry && (workEntry.data.visual.kind === "illustration" || slug === "bachelor" || slug === "web_eval") && (
         <div class="article-project-visual">
           <ProjectVisual visual={workEntry.data.visual} eager />
         </div>
       )}
       <div class="prose">
         <Content />
+        {slug === "bachelor" && <BachelorMedia />}
       </div>
     </div>
   </article>

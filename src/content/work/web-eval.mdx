@@ -5,16 +5,16 @@ kind: software
 yearLabel: "2023 - present"
 slug: web_eval
 featured: true
-order: 3
+order: 2
 visual:
   kind: image
-  src: "../../assets/images/qtrvsim-homepage.png"
-  alt: "QtRvSim Web Evaluation homepage"
+  src: "../../assets/images/webeval_task.avif"
+  alt: "QtRvSim Web Evaluation reference interface"
 ---
 
 import Figure from "../../components/Figure.astro";
-import homepage from "../../assets/images/qtrvsim-homepage.png";
-import submission from "../../assets/images/qtrvsim-submission.png";
+import webevalMain from "../../assets/images/webeval_main.avif";
+import webevalReference from "../../assets/images/webeval_reference.avif";
 
 This is a web evaluation system for student RISC-V submissions in course [b35apo](https://cw.fel.cvut.cz/b222/courses/b35apo/en/start).
 Users can submit their RISC-V (in some cases C) code, and it will be evaluated using [QtRvSim](https://github.com/cvut/qtrvsim) (will be checked for correct output),
@@ -29,6 +29,6 @@ I aim to extend the system, so it is able to evaluate other languages (C, C++, P
 
 The running version can be found on [https://eval.comparch.edu.cvut.cz](https://eval.comparch.edu.cvut.cz), repository is available on [GitLab](https://gitlab.fel.cvut.cz/b35apo/qtrvsim-eval-web).
 
-<Figure src={homepage} alt="Homepage" />
+<Figure src={webevalMain} alt="QtRvSim Web Evaluation main interface" caption="QtRvSim Web Evaluation main interface" />
 
-<Figure src={submission} alt="Submission" />
+<Figure src={webevalReference} alt="QtRvSim Web Evaluation reference interface" caption="QtRvSim Web Evaluation reference interface" />

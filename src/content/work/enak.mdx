@@ -1,0 +1,82 @@
+---
+title: "Energetická akademie"
+summary: "An Energy Academy workshop, with the aim to educate kids about production and consumption of energy in the electrical grid and ways to properly balance it."
+kind: education
+yearLabel: "2025 - present"
+slug: enak
+featured: true
+order: 1
+visual:
+  kind: image
+  src: "../../assets/images/enak-rozlozeny.avif"
+  alt: "ENAK energy education model laid out on a green map"
+---
+
+import PhotoGallery from "../../components/PhotoGallery.astro";
+import enakRozlozeny from "../../assets/images/enak-rozlozeny.avif";
+import enakRozlozeny2 from "../../assets/images/enak-rozlozeny-2.avif";
+import enakRozlozeny3 from "../../assets/images/enak-rozlozeny-3.avif";
+import enakVetrna from "../../assets/images/enak-vetrna.avif";
+import enakUi from "../../assets/images/enak-ui.avif";
+
+<PhotoGallery lead={{
+  src: enakRozlozeny,
+  alt: "ENAK energy education model laid out on a green map",
+  caption: "ENAK model · overview",
+}} photos={[
+  { src: enakRozlozeny2, alt: "ENAK energy education model viewed from the front", caption: "ENAK model · front view" },
+  { src: enakRozlozeny3, alt: "ENAK energy education model displayed by a window", caption: "ENAK model · full display", position: "center 65%" },
+  { src: enakVetrna, alt: "Wind turbine module on the ENAK energy education model", caption: "Wind energy module · close-up" },
+  { src: enakUi, alt: "ENAK app interface showing energy production and consumption", caption: "ENAK app · interface", fit: "contain" },
+]} />
+
+## About the workshop
+
+The one full workshop consists of 5 sets - teams - each having 8 different types of powerplants, a control panel, a susbtation to connect the powerplants
+to the main control board. Each team also gets a full set of 16 magnetic nature tiles, from which they build their own landscape, on which they
+build their own town from given powerplants and a set of buildings.
+
+The task for each of the teams is to go through the prepared 'game' script the lecturer guides them through, and piece by piece enlarge their little town to a big city
+with lots of leisure facilities, housing, education, and powerplants. Their core task is to balance the production and consumption of this town as they
+go through all the scenarios that happen - for example, in during the night their photovoltaic powerplants do not produce any energy, as there is no
+Sun in the sky, but the stadium they have built consumes more energy in the night, now even more when there is a big event happening at it. This causes
+a shortage of energy that the teams need to somehow resolve.
+
+Each team is scored in several metrics:
+- ecology - how much emissions has their power production produced
+- finances - how expensive or cheap their electricity was
+- grid stability - how balanced their grid was throughout the whole game
+- town development - how much of the thown they built up
+- popularity - all other metrics influence this one, its a combination of the four previous ones
+
+## Hardware implementation
+
+The hardware implementation consists of a fully custom made powerplant PCBs based around the [CH32V003](https://wch-ic.com/products/CH32V003.html)
+RISC-V processor, which communicate with the central substation based on the same processor over a set of USB-C wires. The communication protocol is
+a in-house build bitbus protocol, that carries information about the UIDs of the powerplants, as their types and commands them to perform certain
+actions (such as start spinning the wind powerplant, set the RGB color to 255,255,0 etc.).
+
+The mainboard, based on the ESP32S3 Wroom on a custom made PCB, can then communicate with up to 3 of those substations (possibly even more can be added via passivly extending
+another already connected substation) via UART. The teams then use the inbuild encoders to control the production values for each of the 7 segment displays,
+displaying the raw values and 0-100% of the production coefficient for each power plant type.
+
+The display PCBs are using a set of shift segments, out for segments - in for encoders, to create a modular sytem that allows for the panels to be
+fully disabled and stowed away in a transport box, ready for the next workshop.
+
+The workshop runs fully in the cloud using docker, with no need of another computer that may sometimes be complicated to connect to a lecture hall projection system.
+The lecturer only needs the login details to the system and a stable internet conection to which all the boards connect to (provided by an off the shelf mobile AP).
+
+## 3D printing
+
+The full workshop takes about ~700-800 print hours to print, depending which type and make of a 3D printer and filament you will use to do to. We 
+generally recommend something as PET-G to make it a bit stronger, but in some cases PLA could suffice.
+
+The 3D models are separated into several parts (the conversion from Blender models into something 3D-printable alone took about 60+ work hours),
+each printable in one color (sometimes two), to make the printing as easier as possible. The parts
+are then glued together when needed, saving from complex reprints of the whole powerplants like in the previous version (looking at you water plant).
+
+### Useful links
+
+- [v2.enak.cz](https://v2.enak.cz) - web portal for lecturers for the v2 (current version) of the workshop
+- [docs.enak.cz](https://docs.enak.cz) - documentation page for the workshop
+- [GitHub organisation](https://github.com/EnergetickaAkademie) - all software implementation for the workshop
