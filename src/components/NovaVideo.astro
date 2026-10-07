@@ -53,7 +53,6 @@ const embedUrl = `${novaOrigin}/embed/${encodeURIComponent(embedId)}`;
             aria-label={`Seek to ${segment.label}; segment starts at ${segment.startSeconds} seconds and ends at ${segment.endSeconds} seconds`}
             aria-pressed="false"
           >
-            <span aria-hidden="true">▶</span>
             {segment.label}
           </button>
         ))}
@@ -61,7 +60,7 @@ const embedUrl = `${novaOrigin}/embed/${encodeURIComponent(embedId)}`;
     </div>
 
     <p class="nova-video__status" data-nova-status aria-live="polite">
-      Select a segment to request its start time in the player.
+      Select a segment to skip to it in the player.
     </p>
   </div>
 </section>
@@ -182,7 +181,7 @@ const embedUrl = `${novaOrigin}/embed/${encodeURIComponent(embedId)}`;
       if (typeof currentTime !== "number" || Math.abs(currentTime - pendingSeek.seconds) > 5) return;
 
       window.clearTimeout(confirmationTimer);
-      status.textContent = `Player moved to ${pendingSeek.label.split("–")[0]}.`;
+      status.textContent = `Player moved to ${pendingSeek.label.split("-")[0].trim()}.`;
       pendingSeek = null;
       seekRequestSent = false;
     };
@@ -200,7 +199,7 @@ const embedUrl = `${novaOrigin}/embed/${encodeURIComponent(embedId)}`;
         if (!Number.isFinite(seconds)) return;
 
         buttons.forEach((candidate) => candidate.setAttribute("aria-pressed", String(candidate === button)));
-        pendingSeek = { seconds, label: button.textContent?.trim().replace(/^▶\s*/, "") ?? `${seconds}s` };
+        pendingSeek = { seconds, label: button.textContent?.trim() ?? `${seconds}s` };
         awaitingSource = false;
         seekRequestSent = false;
         status.textContent = `Requesting ${pendingSeek.label} in the Nova player…`;
@@ -318,12 +317,6 @@ const embedUrl = `${novaOrigin}/embed/${encodeURIComponent(embedId)}`;
       color 150ms ease,
       border-color 150ms ease,
       background 150ms ease;
-  }
-
-  .nova-video__buttons button span {
-    margin-right: 0.25rem;
-    color: var(--green);
-    font-size: 0.7em;
   }
 
   .nova-video__buttons button:hover,
