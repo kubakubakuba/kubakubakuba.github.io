@@ -7,12 +7,16 @@ interface Props {
   alt: string;
   caption?: string;
   portrait?: boolean;
+  compact?: boolean;
 }
 
-const { src, alt, caption, portrait = false } = Astro.props;
+const { src, alt, caption, portrait = false, compact = false } = Astro.props;
 ---
 
-<figure class:list={["content-figure", { "content-figure--portrait": portrait }]}>
+<figure class:list={[
+  "content-figure",
+  { "content-figure--portrait": portrait, "content-figure--compact": compact },
+]}>
   <a
     class="content-figure__image"
     href={src.src}
@@ -25,7 +29,7 @@ const { src, alt, caption, portrait = false } = Astro.props;
       format="avif"
       alt={alt}
       widths={[480, 768, 1080, 1440]}
-      sizes={portrait ? "(max-width: 760px) 100vw, 720px" : "(max-width: 760px) 100vw, 960px"}
+      sizes={portrait || compact ? "(max-width: 760px) 100vw, 720px" : "(max-width: 760px) 100vw, 960px"}
       loading="lazy"
       decoding="async"
     />

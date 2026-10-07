@@ -13,11 +13,14 @@ visual:
 ---
 
 import PhotoGallery from "../../components/PhotoGallery.astro";
+import NovaVideo from "../../components/NovaVideo.astro";
+import Figure from "../../components/Figure.astro";
 import enakRozlozeny from "../../assets/images/enak-rozlozeny.avif";
 import enakRozlozeny2 from "../../assets/images/enak-rozlozeny-2.avif";
 import enakRozlozeny3 from "../../assets/images/enak-rozlozeny-3.avif";
 import enakVetrna from "../../assets/images/enak-vetrna.avif";
 import enakUi from "../../assets/images/enak-ui.avif";
+import enakSnidane from "../../assets/images/enak-snidane-s-novou-2026.avif";
 
 <PhotoGallery lead={{
   src: enakRozlozeny,
@@ -29,6 +32,26 @@ import enakUi from "../../assets/images/enak-ui.avif";
   { src: enakVetrna, alt: "Wind turbine module on the ENAK energy education model", caption: "Wind energy module · close-up" },
   { src: enakUi, alt: "ENAK app interface showing energy production and consumption", caption: "ENAK app · interface", fit: "contain" },
 ]} />
+
+## Snídaně s Novou
+
+<NovaVideo
+  title="Snídaně s Novou · 6. 10. 2026"
+  embedId="HvLNL1pbWGb"
+  originalUrl="https://tv.nova.cz/porad/snidane-s-novou/video-epizoda/570467-6-10-2026"
+  segments={[
+    { label: "36:54–41:54", startSeconds: 2214, endSeconds: 2514 },
+    { label: "46:54–53:20", startSeconds: 2814, endSeconds: 3200 },
+    { label: "1:26:12–1:31:27", startSeconds: 5172, endSeconds: 5487 },
+  ]}
+/>
+
+<Figure
+  src={enakSnidane}
+  alt="ENAK and Snídaně s Novou hosts on the studio set"
+  caption="Snídaně s Novou · 6. 10. 2026"
+  compact
+/>
 
 ## About the workshop
 

@@ -1,0 +1,368 @@
+---
+export interface NovaVideoSegment {
+  label: string;
+  startSeconds: number;
+  endSeconds: number;
+}
+
+interface Props {
+  title: string;
+  embedId: string;
+  originalUrl: string;
+  segments: NovaVideoSegment[];
+}
+
+const { title, embedId, originalUrl, segments } = Astro.props;
+const novaOrigin = "https://media.cms.nova.cz";
+const embedUrl = `${novaOrigin}/embed/${encodeURIComponent(embedId)}`;
+---
+
+<section class="nova-video" data-nova-video aria-label={title}>
+  <div class="nova-video__bar">
+    <span class="nova-video__label">media://tv-nova/snidane</span>
+  </div>
+
+  <div class="nova-video__frame">
+    <iframe
+      data-nova-iframe
+      src={embedUrl}
+      title={title}
+      allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+      allowfullscreen
+      loading="lazy"
+    ></iframe>
+  </div>
+
+  <div class="nova-video__body">
+    <div class="nova-video__heading">
+      <h2 class="nova-video__title">{title}</h2>
+      <a href={originalUrl} target="_blank" rel="noreferrer">
+        Watch the original episode on TV Nova <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+
+    <div class="nova-video__segments" aria-label="Relevant video segments">
+      <span class="nova-video__segments-label">Relevant segments</span>
+      <div class="nova-video__buttons">
+        {segments.map((segment) => (
+          <button
+            type="button"
+            data-nova-seek
+            data-start-seconds={segment.startSeconds}
+            data-end-seconds={segment.endSeconds}
+            aria-label={`Seek to ${segment.label}; segment starts at ${segment.startSeconds} seconds and ends at ${segment.endSeconds} seconds`}
+            aria-pressed="false"
+          >
+            <span aria-hidden="true">▶</span>
+            {segment.label}
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <p class="nova-video__status" data-nova-status aria-live="polite">
+      Select a segment to request its start time in the player.
+    </p>
+  </div>
+</section>
+
+<script>
+  const NOVA_ORIGIN = "https://media.cms.nova.cz";
+  const NOVA_CHANNEL = "ef-player";
+
+  interface NovaEventData {
+    ad?: boolean;
+    duration?: number;
+    eventName?: string;
+    currentTime?: number;
+    src?: string;
+  }
+
+  interface NovaEnvelope {
+    klebetnica?: boolean;
+    command?: string;
+    data?: NovaEventData;
+  }
+
+  interface PendingSeek {
+    seconds: number;
+    label: string;
+  }
+
+  document.querySelectorAll<HTMLElement>("[data-nova-video]").forEach((root, index) => {
+    const iframe = root.querySelector<HTMLIFrameElement>("[data-nova-iframe]");
+    const status = root.querySelector<HTMLElement>("[data-nova-status]");
+    const buttons = Array.from(root.querySelectorAll<HTMLButtonElement>("[data-nova-seek]"));
+
+    if (!iframe || !status || buttons.length === 0) return;
+
+    const channelId = `swpelc-nova-${index}-${Math.random().toString(36).slice(2)}`;
+    let connected = false;
+    let pendingSeek: PendingSeek | null = null;
+    let sourceUrl: string | null = null;
+    let awaitingSource = false;
+    let seekRequestSent = false;
+    let confirmationTimer: number | undefined;
+
+    const postEnvelope = (message: Record<string, unknown>) => {
+      iframe.contentWindow?.postMessage(
+        {
+          klebetnica: true,
+          from: channelId,
+          ...message,
+        },
+        NOVA_ORIGIN,
+      );
+    };
+
+    const announceChannel = () => {
+      postEnvelope({ command: "ping", channels: [NOVA_CHANNEL] });
+    };
+
+    const sendPlayerCommand = (data: Record<string, unknown>) => {
+      postEnvelope({ command: "data", channels: [NOVA_CHANNEL], data });
+    };
+
+    const sendPendingSeek = () => {
+      if (!connected || !pendingSeek) return;
+
+      if (!sourceUrl) {
+        if (!awaitingSource) {
+          awaitingSource = true;
+          status.textContent = `Preparing ${pendingSeek.label} in the Nova player…`;
+          sendPlayerCommand({ command: "play", initiator: "user" });
+        }
+        return;
+      }
+
+      if (seekRequestSent) return;
+      seekRequestSent = true;
+      status.textContent = `Opening ${pendingSeek.label} in the Nova player…`;
+      sendPlayerCommand({
+        command: "change-config",
+        overrides: { startAt: pendingSeek.seconds },
+      });
+      sendPlayerCommand({
+        command: "change-source",
+        source: sourceUrl,
+        autoplay: true,
+      });
+    };
+
+    const handleMessage = (event: MessageEvent<NovaEnvelope>) => {
+      if (event.origin !== NOVA_ORIGIN || event.source !== iframe.contentWindow) return;
+
+      const message = event.data;
+      if (!message?.klebetnica) return;
+
+      if (message.command === "ping") {
+        postEnvelope({ command: "pong", channels: [NOVA_CHANNEL] });
+        connected = true;
+        sendPendingSeek();
+        return;
+      }
+
+      if (message.command === "pong" || message.command === "channels-add") {
+        connected = true;
+        sendPendingSeek();
+        return;
+      }
+
+      if (message.command !== "data" || !message.data) return;
+
+      if (!message.data.ad && typeof message.data.src === "string" && message.data.src.length > 0) {
+        sourceUrl = message.data.src;
+        awaitingSource = false;
+        sendPendingSeek();
+      }
+
+      if (!pendingSeek) return;
+
+      const currentTime = message.data.currentTime;
+      if (typeof currentTime !== "number" || Math.abs(currentTime - pendingSeek.seconds) > 5) return;
+
+      window.clearTimeout(confirmationTimer);
+      status.textContent = `Player moved to ${pendingSeek.label.split("–")[0]}.`;
+      pendingSeek = null;
+      seekRequestSent = false;
+    };
+
+    window.addEventListener("message", handleMessage);
+    iframe.addEventListener("load", () => {
+      connected = false;
+      announceChannel();
+    });
+    announceChannel();
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const seconds = Number(button.dataset.startSeconds);
+        if (!Number.isFinite(seconds)) return;
+
+        buttons.forEach((candidate) => candidate.setAttribute("aria-pressed", String(candidate === button)));
+        pendingSeek = { seconds, label: button.textContent?.trim().replace(/^▶\s*/, "") ?? `${seconds}s` };
+        awaitingSource = false;
+        seekRequestSent = false;
+        status.textContent = `Requesting ${pendingSeek.label} in the Nova player…`;
+
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        iframe.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
+        iframe.focus({ preventScroll: true });
+
+        if (connected) sendPendingSeek();
+        else announceChannel();
+
+        window.clearTimeout(confirmationTimer);
+        confirmationTimer = window.setTimeout(() => {
+          if (!pendingSeek) return;
+          status.textContent = `Nova did not confirm ${pendingSeek.label}. Please seek manually or open the original episode.`;
+        }, 15000);
+      });
+    });
+  });
+</script>
+
+<style>
+  .nova-video {
+    overflow: hidden;
+    margin-block: 2.5rem 3.5rem;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--bg-raised);
+    box-shadow: 0 18px 45px rgb(0 0 0 / 0.22);
+  }
+
+  .nova-video__bar {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 38px;
+    padding: 0.55rem 0.8rem;
+    border-bottom: 1px solid var(--line);
+    background: var(--panel-soft);
+    font: 0.68rem/1.35 var(--mono);
+  }
+
+  .nova-video__label {
+    overflow: hidden;
+    color: var(--muted-strong);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .nova-video__frame {
+    aspect-ratio: 16 / 9;
+    background: #000;
+  }
+
+  .nova-video__frame iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .nova-video__body {
+    padding: clamp(1rem, 3vw, 1.5rem);
+  }
+
+  .nova-video__heading {
+    display: flex;
+    gap: 0.75rem 1.5rem;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+
+  .nova-video .nova-video__title {
+    margin: 0;
+    color: var(--text);
+    font: 700 clamp(1rem, 2.5vw, 1.2rem)/1.35 var(--sans);
+    letter-spacing: -0.015em;
+  }
+
+  .nova-video__heading a {
+    flex: none;
+    color: var(--green);
+    font: 0.72rem/1.45 var(--mono);
+  }
+
+  .nova-video__segments {
+    margin-top: 1.25rem;
+  }
+
+  .nova-video__segments-label {
+    display: block;
+    margin-bottom: 0.55rem;
+    color: var(--muted);
+    font: 0.68rem/1.4 var(--mono);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .nova-video__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+  }
+
+  .nova-video__buttons button {
+    padding: 0.55rem 0.75rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 6px;
+    color: var(--muted-strong);
+    background: var(--panel);
+    font: 0.74rem/1.25 var(--mono);
+    cursor: pointer;
+    transition:
+      color 150ms ease,
+      border-color 150ms ease,
+      background 150ms ease;
+  }
+
+  .nova-video__buttons button span {
+    margin-right: 0.25rem;
+    color: var(--green);
+    font-size: 0.7em;
+  }
+
+  .nova-video__buttons button:hover,
+  .nova-video__buttons button[aria-pressed="true"] {
+    border-color: var(--green);
+    color: var(--text);
+    background: var(--panel-hover);
+  }
+
+  .nova-video__status {
+    min-height: 1.4em;
+    margin: 0.85rem 0 0;
+    color: var(--muted);
+    font: 0.68rem/1.5 var(--mono);
+  }
+
+  @media (max-width: 640px) {
+    .nova-video__heading {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .nova-video__heading a {
+      flex: initial;
+    }
+
+    .nova-video__buttons {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+
+    .nova-video__buttons button {
+      text-align: left;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nova-video__buttons button {
+      transition: none;
+    }
+  }
+</style>
