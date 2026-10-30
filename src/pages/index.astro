@@ -4,6 +4,7 @@ import { getCollection, render } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import WindowFrame from "../components/WindowFrame.astro";
 import ProjectCard from "../components/ProjectCard.astro";
+import Icon from "../components/Icon.astro";
 import portrait from "../assets/images/profile.avif";
 
 const work = (await getCollection("work")).sort((a, b) => a.data.order - b.data.order);
@@ -17,14 +18,14 @@ const { Content: ProfileContent } = await render(profile);
 
 <BaseLayout>
   <div class="home-stack">
-    <WindowFrame title="jakub@web: ~/profile" label="online" class="hero-window">
+    <WindowFrame title="jakub@web:~/profile" label="online" class="hero-window">
       <div class="hero-copy">
         <h1><span class="hero-copy__intro">Hello, I'm</span><span class="hero-copy__name">Jakub Pelc</span></h1>
         <div class="hero-profile prose">
           <ProfileContent />
         </div>
         <div class="hero-actions">
-          <a class="button button--primary" href="#work">Explore work <span aria-hidden="true">↓</span></a>
+          <a class="button button--primary" href="#work">Explore work <Icon name="arrow-down" /></a>
           <a class="button" href="mailto:contact@swpelc.eu">contact@swpelc.eu</a>
         </div>
       </div>
@@ -43,24 +44,18 @@ const { Content: ProfileContent } = await render(profile);
       </div>
     </WindowFrame>
 
-    <section id="work" aria-labelledby="featured-title">
+    <section id="work" aria-label="Featured work">
       <div class="section-heading">
-        <div>
-          <span class="section-kicker">Featured work</span>
-          <!--<h2 id="featured-title">Selected projects</h2> -->
-        </div>
+        <span class="section-kicker">Featured work</span>
       </div>
       <div class="featured-grid">
         {featured.map((entry, index) => <ProjectCard entry={entry} featured eager={index === 0} />)}
       </div>
     </section>
 
-    <section aria-labelledby="more-work-title">
+    <section aria-label="More work">
       <div class="section-heading">
-        <div>
-          <span class="section-kicker">More work</span>
-          <!--<h2 id="more-work-title">Other projects</h2> -->
-        </div>
+        <span class="section-kicker">More work</span>
       </div>
       <div class="secondary-grid">
         {secondary.map((entry) => <ProjectCard entry={entry} />)}

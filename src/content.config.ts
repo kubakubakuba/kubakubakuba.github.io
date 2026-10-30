@@ -13,18 +13,12 @@ const work = defineCollection({
       slug: z.string(),
       featured: z.boolean().default(false),
       order: z.number(),
-      visual: z.discriminatedUnion("kind", [
-        z.object({
-          kind: z.literal("image"),
-          src: image(),
-          alt: z.string(),
-        }),
-        z.object({
-          kind: z.literal("illustration"),
-          name: z.enum(["thesis", "enak"]),
-          alt: z.string(),
-        }),
-      ]),
+      showVisual: z.boolean().default(false),
+      visual: z.object({
+        kind: z.literal("image"),
+        src: image(),
+        alt: z.string(),
+      }),
     }),
 });
 

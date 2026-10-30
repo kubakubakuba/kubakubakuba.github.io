@@ -5,6 +5,7 @@ import ProjectVisual from "../components/ProjectVisual.astro";
 import MathStyles from "../components/MathStyles.astro";
 import BachelorMedia from "../components/BachelorMedia.astro";
 import WindowBar from "../components/WindowBar.astro";
+import Icon from "../components/Icon.astro";
 
 export async function getStaticPaths() {
   const [work, pages] = await Promise.all([getCollection("work"), getCollection("pages")]);
@@ -26,7 +27,8 @@ let Content;
 let title: string;
 let heading: string;
 let description: string;
-let windowLabel: string;
+let windowTitle: string;
+let windowLabel: string | undefined;
 let showDescription: boolean;
 
 if (workEntry) {
@@ -34,6 +36,7 @@ if (workEntry) {
   title = workEntry.data.title;
   heading = workEntry.data.title;
   description = workEntry.data.summary;
+  windowTitle = `jakub@web:~/work/${slug}`;
   windowLabel = `${workEntry.data.kind} · ${workEntry.data.yearLabel}`;
   showDescription = true;
 } else {
@@ -41,17 +44,17 @@ if (workEntry) {
   title = pageEntry!.data.title;
   heading = pageEntry!.data.heading ?? pageEntry!.data.title;
   description = pageEntry!.data.description;
-  windowLabel = `/home/jakub/${slug}`;
+  windowTitle = `jakub@web:~/${slug}`;
   showDescription = pageEntry!.data.showDescription;
 }
 ---
 
 <BaseLayout title={title} description={description}>
   {slug === "bachelor" && <MathStyles />}
-  <article class:list={["window", "article-page", `article-page--${slug}`, { "article-page--simple": !workEntry }]}>
-    <WindowBar title={`${slug}.md`} label={windowLabel} />
+  <article class:list={["window", "article-page", `article-page--${slug}`]}>
+    <WindowBar title={windowTitle} label={windowLabel} />
     <div class="window__body">
-      {workEntry && <a class="back-link" href="/#work">← cd ..</a>}
+      {workEntry && <a class="back-link" href="/#work"><Icon name="arrow-left" /> cd ..</a>}
       <header class:list={["article-header", { "article-header--compact": !showDescription }]}>
         <h1>{heading}</h1>
         {showDescription && <p>{description}</p>}
@@ -63,7 +66,7 @@ if (workEntry) {
           </div>
         )}
       </header>
-      {workEntry && (workEntry.data.visual.kind === "illustration" || slug === "bachelor" || slug === "web_eval") && (
+      {workEntry?.data.showVisual && (
         <div class="article-project-visual">
           <ProjectVisual visual={workEntry.data.visual} eager />
         </div>

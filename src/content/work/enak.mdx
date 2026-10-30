@@ -13,8 +13,7 @@ visual:
 ---
 
 import PhotoGallery from "../../components/PhotoGallery.astro";
-import NovaVideo from "../../components/NovaVideo.astro";
-import Figure from "../../components/Figure.astro";
+import VideoPlayer from "../../components/VideoPlayer.astro";
 import enakRozlozeny from "../../assets/images/enak-rozlozeny.avif";
 import enakRozlozeny2 from "../../assets/images/enak-rozlozeny-2.avif";
 import enakRozlozeny3 from "../../assets/images/enak-rozlozeny-3.avif";
@@ -35,33 +34,23 @@ import enakSnidane from "../../assets/images/enak-snidane-s-novou-2026.avif";
 
 ## Snídaně s Novou
 
-<NovaVideo
+{/* TODO: set src to the hosted video URL */}
+<VideoPlayer
   title="Snídaně s Novou · 6. 10. 2026"
-  embedId="HvLNL1pbWGb"
-  originalUrl="https://tv.nova.cz/porad/snidane-s-novou/video-epizoda/570467-6-10-2026"
-  segments={[
-    { label: "36:54 - 41:54", startSeconds: 2214, endSeconds: 2514 },
-    { label: "46:54 - 53:20", startSeconds: 2814, endSeconds: 3200 },
-    { label: "1:26:12 - 1:31:27", startSeconds: 5172, endSeconds: 5487 },
-  ]}
-/>
-
-<Figure
-  src={enakSnidane}
-  alt="ENAK and Snídaně s Novou hosts on the studio set"
-  caption="Snídaně s Novou · 6. 10. 2026"
-  compact
+  src=""
+  poster={enakSnidane}
+  label="media://tv-nova/snidane"
 />
 
 ## About the workshop
 
-The one full workshop consists of 5 sets - teams - each having 8 different types of powerplants, a control panel, a susbtation to connect the powerplants
+The one full workshop consists of 5 sets - teams - each having 8 different types of powerplants, a control panel, a substation to connect the powerplants
 to the main control board. Each team also gets a full set of 16 magnetic nature tiles, from which they build their own landscape, on which they
 build their own town from given powerplants and a set of buildings.
 
 The task for each of the teams is to go through the prepared 'game' script the lecturer guides them through, and piece by piece enlarge their little town to a big city
 with lots of leisure facilities, housing, education, and powerplants. Their core task is to balance the production and consumption of this town as they
-go through all the scenarios that happen - for example, in during the night their photovoltaic powerplants do not produce any energy, as there is no
+go through all the scenarios that happen - for example, during the night their photovoltaic powerplants do not produce any energy, as there is no
 Sun in the sky, but the stadium they have built consumes more energy in the night, now even more when there is a big event happening at it. This causes
 a shortage of energy that the teams need to somehow resolve.
 
@@ -69,7 +58,7 @@ Each team is scored in several metrics:
 - ecology - how much emissions has their power production produced
 - finances - how expensive or cheap their electricity was
 - grid stability - how balanced their grid was throughout the whole game
-- town development - how much of the thown they built up
+- town development - how much of the town they built up
 - popularity - all other metrics influence this one, its a combination of the four previous ones
 
 ## Hardware implementation
@@ -79,23 +68,23 @@ RISC-V processor, which communicate with the central substation based on the sam
 a in-house build bitbus protocol, that carries information about the UIDs of the powerplants, as their types and commands them to perform certain
 actions (such as start spinning the wind powerplant, set the RGB color to 255,255,0 etc.).
 
-The mainboard, based on the ESP32S3 Wroom on a custom made PCB, can then communicate with up to 3 of those substations (possibly even more can be added via passivly extending
-another already connected substation) via UART. The teams then use the inbuild encoders to control the production values for each of the 7 segment displays,
+The mainboard, based on the ESP32S3 Wroom on a custom made PCB, can then communicate with up to 3 of those substations (possibly even more can be added via passively extending
+another already connected substation) via UART. The teams then use the built-in encoders to control the production values for each of the 7 segment displays,
 displaying the raw values and 0-100% of the production coefficient for each power plant type.
 
-The display PCBs are using a set of shift segments, out for segments - in for encoders, to create a modular sytem that allows for the panels to be
+The display PCBs are using a set of shift segments, out for segments - in for encoders, to create a modular system that allows for the panels to be
 fully disabled and stowed away in a transport box, ready for the next workshop.
 
 The workshop runs fully in the cloud using docker, with no need of another computer that may sometimes be complicated to connect to a lecture hall projection system.
-The lecturer only needs the login details to the system and a stable internet conection to which all the boards connect to (provided by an off the shelf mobile AP).
+The lecturer only needs the login details to the system and a stable internet connection to which all the boards connect to (provided by an off the shelf mobile AP).
 
 ## 3D printing
 
-The full workshop takes about ~700-800 print hours to print, depending which type and make of a 3D printer and filament you will use to do to. We 
+The full workshop takes about ~700-800 print hours to print, depending which type and make of a 3D printer and filament you will use. We 
 generally recommend something as PET-G to make it a bit stronger, but in some cases PLA could suffice.
 
 The 3D models are separated into several parts (the conversion from Blender models into something 3D-printable alone took about 60+ work hours),
-each printable in one color (sometimes two), to make the printing as easier as possible. The parts
+each printable in one color (sometimes two), to make the printing as easy as possible. The parts
 are then glued together when needed, saving from complex reprints of the whole powerplants like in the previous version (looking at you water plant).
 
 ### Useful links

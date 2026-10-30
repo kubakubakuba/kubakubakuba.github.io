@@ -26,8 +26,14 @@
   --red: #ed6a5e;
   --shadow: 0 24px 70px rgb(0 0 0 / 0.38);
   --mono: "CommitMono", "SFMono-Regular", Consolas, monospace;
-  --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --radius: 13px;
+  --display: "Noto Sans Variable", "Noto Sans", var(--sans);
+  --sans: "Inter Variable", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --text-2xs: 0.68rem;
+  --text-xs: 0.75rem;
+  --text-sm: 0.84rem;
 }
 
 *,
@@ -79,6 +85,11 @@ a:hover {
   text-decoration-color: var(--green);
 }
 
+h1,
+h2 {
+  font-family: var(--display);
+}
+
 img,
 svg {
   display: block;
@@ -93,7 +104,7 @@ svg {
 :focus-visible {
   outline: 2px solid var(--green);
   outline-offset: 4px;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
 }
 
 .skip-link {
@@ -103,10 +114,10 @@ svg {
   left: 0.75rem;
   padding: 0.65rem 0.9rem;
   border: 1px solid var(--green);
-  border-radius: 7px;
+  border-radius: var(--radius-md);
   color: var(--bg);
   background: var(--green);
-  font: 700 0.8rem var(--mono);
+  font: 700 var(--text-xs) var(--mono);
   transform: translateY(-160%);
   transition: transform 160ms ease;
 }
@@ -132,11 +143,11 @@ svg {
   margin: 0 auto;
   padding: 0.4rem 0.65rem 0.4rem 0.85rem;
   border: 1px solid rgb(55 71 84 / 0.85);
-  border-radius: 10px;
+  border-radius: var(--radius-lg);
   background: rgb(15 21 28 / 0.9);
   box-shadow: 0 12px 30px rgb(0 0 0 / 0.26);
   backdrop-filter: blur(18px);
-  font: 0.76rem var(--mono);
+  font: var(--text-xs) var(--mono);
 }
 
 .topbar__identity {
@@ -158,7 +169,7 @@ svg {
 
 .topbar__nav a {
   padding: 0.35rem 0.55rem;
-  border-radius: 5px;
+  border-radius: var(--radius-sm);
   color: var(--muted-strong);
   text-decoration: none;
 }
@@ -195,7 +206,7 @@ svg {
 .window {
   overflow: hidden;
   border: 1px solid var(--line);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
   background: rgb(18 26 33 / 0.98);
   box-shadow: var(--shadow), inset 0 1px rgb(255 255 255 / 0.035);
 }
@@ -216,17 +227,19 @@ svg {
   overflow: hidden;
   margin: 0;
   color: var(--muted-strong);
-  font: 400 0.72rem/1 var(--mono);
+  font: 400 var(--text-xs)/1.5 var(--mono);
   text-align: left;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .window__label {
-  max-width: 9rem;
+  flex: none;
+  max-width: 50%;
   overflow: hidden;
   color: var(--muted);
-  font-size: 0.66rem;
+  font-size: var(--text-2xs);
+  line-height: 1.5;
   text-align: right;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -246,7 +259,7 @@ svg {
 .eyebrow,
 .section-kicker {
   color: var(--green);
-  font-size: 0.7rem;
+  font-size: var(--text-2xs);
   letter-spacing: 0.09em;
   text-transform: uppercase;
 }
@@ -308,7 +321,7 @@ svg {
   margin-block: 0.7rem;
 }
 
-.hero-profile ul {
+.prose.hero-profile ul {
   display: flex;
   width: 100%;
   flex-wrap: wrap;
@@ -328,7 +341,7 @@ svg {
   border-radius: 999px;
   color: var(--muted-strong);
   background: rgb(255 255 255 / 0.025);
-  font: 0.76rem var(--mono);
+  font: var(--text-xs) var(--mono);
 }
 
 .hero-actions {
@@ -344,10 +357,10 @@ svg {
   align-items: center;
   padding: 0.7rem 0.9rem;
   border: 1px solid var(--line-strong);
-  border-radius: 7px;
+  border-radius: var(--radius-md);
   color: var(--text);
   background: var(--panel-soft);
-  font: 0.78rem var(--mono);
+  font: var(--text-xs) var(--mono);
   text-decoration: none;
   transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
 }
@@ -375,7 +388,7 @@ svg {
   justify-self: end;
   padding: 0.65rem;
   border: 1px solid var(--line-strong);
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   background: #0d1319;
   transform: rotate(1.5deg);
 }
@@ -386,17 +399,17 @@ svg {
   bottom: 0.8rem;
   padding: 0.22rem 0.45rem;
   border: 1px solid var(--line);
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   color: var(--muted-strong);
   background: rgb(9 13 18 / 0.88);
   content: "profile.avif";
-  font: 0.66rem var(--mono);
+  font: var(--text-2xs) var(--mono);
 }
 
 .portrait-shell img {
   width: 100%;
   aspect-ratio: 0.92;
-  border-radius: 7px;
+  border-radius: var(--radius-md);
   object-fit: cover;
   object-position: 50% 45%;
   filter: saturate(0.82) contrast(1.04);
@@ -404,17 +417,16 @@ svg {
 
 .section-heading {
   display: flex;
-  gap: 2rem;
-  align-items: end;
-  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
   margin-bottom: 1.5rem;
 }
 
-.section-heading h2 {
-  margin: 0.2rem 0 0;
-  font-size: clamp(2rem, 4vw, 3.25rem);
-  line-height: 1.05;
-  letter-spacing: -0.04em;
+.section-heading::after {
+  height: 1px;
+  flex: 1;
+  background: var(--line);
+  content: "";
 }
 
 .featured-grid,
@@ -517,7 +529,7 @@ svg {
   margin-top: auto;
   padding-top: 1.2rem;
   color: var(--green);
-  font: 0.76rem var(--mono);
+  font: var(--text-xs) var(--mono);
 }
 
 .secondary-grid .project-card__copy {
@@ -556,10 +568,6 @@ svg {
   line-height: 0.98;
   letter-spacing: -0.055em;
   overflow-wrap: anywhere;
-}
-
-.article-page:not(.article-page--simple) .article-header h1 {
-  color: var(--green);
 }
 
 .article-header p {
@@ -605,10 +613,10 @@ svg {
 .cv-intro__links a {
   padding: 0.35rem 0.55rem;
   border: 1px solid var(--line);
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   color: var(--muted-strong);
   background: var(--bg-raised);
-  font: 0.72rem var(--mono);
+  font: var(--text-xs) var(--mono);
   text-decoration: none;
 }
 
@@ -625,14 +633,14 @@ svg {
   width: 100%;
   aspect-ratio: 0.92;
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   object-fit: cover;
 }
 
 .cv-intro__portrait figcaption {
-  margin-top: 0.6rem;
+  margin-top: 0.7rem;
   color: var(--muted);
-  font: 0.68rem/1.5 var(--mono);
+  font: var(--text-2xs)/1.5 var(--mono);
   text-align: center;
 }
 
@@ -660,7 +668,7 @@ svg {
   display: block;
   padding: 0.75rem 0.85rem;
   border: 1px solid var(--line);
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   background: var(--bg-raised);
   font-family: var(--mono);
   text-decoration: none;
@@ -675,7 +683,7 @@ svg {
   margin: 0 auto clamp(2rem, 7vw, 4.5rem);
   overflow: hidden;
   border: 1px solid var(--line);
-  border-radius: 10px;
+  border-radius: var(--radius-lg);
 }
 
 .article-project-visual .project-visual {
@@ -689,22 +697,24 @@ svg {
   gap: 0.55rem;
   margin-top: 1.3rem;
   color: var(--muted);
-  font-size: 0.7rem;
+  font-size: var(--text-2xs);
   text-transform: uppercase;
 }
 
 .metadata span {
   padding: 0.28rem 0.5rem;
   border: 1px solid var(--line);
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   background: rgb(255 255 255 / 0.02);
 }
 
 .back-link {
   display: inline-flex;
+  gap: 0.4rem;
+  align-items: center;
   margin-bottom: 1rem;
   color: var(--green);
-  font: 0.74rem var(--mono);
+  font: var(--text-xs) var(--mono);
   text-decoration: none;
 }
 
@@ -734,7 +744,7 @@ svg {
 .prose h3 { margin-top: 2.2em; font-size: 1.45rem; }
 .prose h4 { margin-top: 2em; font-size: 1.15rem; }
 .prose h5,
-.prose h6 { font: 700 0.84rem var(--mono); }
+.prose h6 { font: 700 var(--text-sm) var(--mono); }
 
 .prose p,
 .prose ul,
@@ -796,7 +806,7 @@ svg {
 .prose code {
   padding: 0.12em 0.3em;
   border: 1px solid var(--line);
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   color: var(--green);
   background: var(--bg);
   font-size: 0.88em;
@@ -806,7 +816,7 @@ svg {
   overflow-x: auto;
   padding: 1rem;
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   background: var(--bg);
 }
 
@@ -822,7 +832,7 @@ svg {
 
 .content-figure__image {
   display: block;
-  border-radius: 9px;
+  border-radius: var(--radius-md);
   cursor: zoom-in;
 }
 
@@ -830,7 +840,7 @@ svg {
   width: 100%;
   max-height: 760px;
   border: 1px solid var(--line);
-  border-radius: 9px;
+  border-radius: var(--radius-md);
   background: var(--bg);
   object-fit: contain;
 }
@@ -854,7 +864,7 @@ svg {
 .content-figure figcaption {
   margin-top: 0.7rem;
   color: var(--muted);
-  font: 0.7rem/1.5 var(--mono);
+  font: var(--text-2xs)/1.5 var(--mono);
   text-align: center;
 }
 
@@ -954,10 +964,6 @@ svg {
     transform: rotate(0.7deg);
   }
 
-  .section-heading {
-    display: block;
-  }
-
   .featured-grid,
   .secondary-grid {
     grid-template-columns: 1fr;
@@ -987,10 +993,6 @@ svg {
   .prose ul,
   .prose ol {
     padding-left: 1.35rem;
-  }
-
-  .hero-profile ul {
-    padding-left: 0;
   }
 }
 

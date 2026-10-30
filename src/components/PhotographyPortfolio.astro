@@ -1,6 +1,7 @@
 ---
 import type { ImageMetadata } from "astro";
 import PhotoGallery from "./PhotoGallery.astro";
+import Icon from "./Icon.astro";
 import babyEagle from "../assets/images/photography/astro-01-baby-eagle.avif";
 import vdb158 from "../assets/images/photography/astro-02-vdb158.avif";
 import iris from "../assets/images/photography/astro-03-iris.avif";
@@ -52,18 +53,18 @@ const printArtwork: Photo[] = [
 ---
 
 <div class="photography-portfolio">
-  <p class="photography-portfolio__intro">...</p>
+  <!-- <p class="photography-portfolio__intro">Your intro text…</p> -->
 
   <nav class="photography-projects" aria-label="Photography projects">
     <a class="photography-project" href="/astrophotography-exhibition/">
       <span class="photography-project__label">Project 01 · Deep sky</span>
       <strong>Astrophotography exhibition</strong>
-      <span class="photography-project__open">View project <span aria-hidden="true">→</span></span>
+      <span class="photography-project__open">View project <Icon name="arrow-right" /></span>
     </a>
     <a class="photography-project" href="/eclipse-photography/">
       <span class="photography-project__label">Project 02 · Solar</span>
       <strong>Eclipse photography</strong>
-      <span class="photography-project__open">View project <span aria-hidden="true">→</span></span>
+      <span class="photography-project__open">View project <Icon name="arrow-right" /></span>
     </a>
   </nav>
 
@@ -107,7 +108,7 @@ const printArtwork: Photo[] = [
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1rem;
-    margin-block: 2rem 3.5rem;
+    margin-block: 0 3.5rem;
   }
 
   .photography-project {
@@ -116,7 +117,7 @@ const printArtwork: Photo[] = [
     flex-direction: column;
     padding: 1.2rem;
     border: 1px solid var(--line);
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     background: linear-gradient(145deg, rgb(101 214 173 / 0.055), transparent 60%), var(--bg);
     text-decoration: none;
     transition: border-color 180ms ease, transform 180ms ease;
@@ -138,7 +139,7 @@ const printArtwork: Photo[] = [
   .photography-section__label,
   .photography-notes__status {
     color: var(--green);
-    font: 0.68rem/1.5 var(--mono);
+    font: var(--text-2xs)/1.5 var(--mono);
     letter-spacing: 0.035em;
   }
 
@@ -170,7 +171,7 @@ const printArtwork: Photo[] = [
     margin-top: 4rem;
     padding: clamp(1.2rem, 4vw, 2rem);
     border: 1px solid var(--line);
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     background: var(--bg);
   }
 
